@@ -23,32 +23,17 @@ $controller = new TaskController($twig);
 
 switch ($uri) {
     case '/':
-        // TODO : call the welcomePage method of the controller
-        //echo 'Welcome page';
         $controller->welcomePage();
         break;
-    case 'add_task':
-        // TODO : call the addTask method of the controller
-        $controller->addTask();
-        break;
-    case 'check_task':
-        // TODO : call the checkTask method of the controller
-        $controller->checkTask();
-        break;
-    case 'history':
-        // TODO : call the historyPage method of the controller
-        $controller->historyPage();
-        break;
-    case 'uncheck_task':
-        // TODO : call the uncheckTask method of the controller
-        $controller->uncheckTask();
+    case 'add_offer':
+        $controller->addOffer();
         break;
     case 'about':
-        // TODO : call the aboutPage method of the controller
         $controller->aboutPage();
         break;
     default:
-        // TODO : return a 404 error
         echo '404 Not Found';
         break;
 }
+
+?>
