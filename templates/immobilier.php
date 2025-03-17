@@ -15,7 +15,7 @@
     </div>
   
     <nav class="navbar">
-        <a href="index.php">Accueil</a>
+        <a href="home.php">Accueil</a>
         <a href="immobilier.php" class="active" aria-current="page">Immobilier</a>
         <a href="vehicule.php">Véhicules</a>
         <a href="vetements.php">Vêtements</a>

@@ -17,7 +17,7 @@ class OfferController extends Controller
     {
         // Retrieve the list of tasks from the model
         $offers = $this->model->getAllOffers();
-        echo $this->templateEngine->render('index.php', ['offers' => $offers]);
+        echo $this->templateEngine->render('home.php', ['offers' => $offers]);
     }
 
     public function addOffer()
