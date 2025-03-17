@@ -16,14 +16,14 @@
             <img src="Images/BonPlan.png" alt="Le Bon Plan" class="logo">
         </div>
         <nav class="navbar">
-            <a href="index.php" class="active" aria-current="page">Accueil</a>
-            <a href="a-propos.php">À Propos</a>
-            <a href="inscription.php">Inscription</a>
-            <a href="offre.php">Offres</a>
-            <a href="connexion.php">Connexion</a>
-            <a href="avis.php">Avis</a>
-            <a href="contact.php">Contact</a>
-            <a href="cookies.php">Cookies</a>
+            <a href="templates/index.php" class="active" aria-current="page">Accueil</a>
+            <a href="templates/a-propos.php">À Propos</a>
+            <a href="templates/inscription.php">Inscription</a>
+            <a href="templates/offre.php">Offres</a>
+            <a href="templates/connexion.php">Connexion</a>
+            <a href="templates/avis.php">Avis</a>
+            <a href="templates/contact.php">Contact</a>
+            <a href="templates/cookies.php">Cookies</a>
         </nav>
     </header>
     
@@ -33,13 +33,13 @@
 
         <h3>Catégories</h3>
         <ul class="categories">
-            <li><a href="immobilier.php">Immobilier</a></li>
-            <li><a href="vehicule.php">Véhicules</a></li>
-            <li><a href="vetements.php">Vêtements</a></li>
-            <li><a href="multimedia.php">Multimédia</a></li>
-            <li><a href="maison.php">Maison</a></li>
-            <li><a href="loisirs.php">Loisirs</a></li>
-            <li><a href="services.php">Services</a></li>
+            <li><a href="templates/immobilier.php">Immobilier</a></li>
+            <li><a href="templates/vehicule.php">Véhicules</a></li>
+            <li><a href="templates/vetements.php">Vêtements</a></li>
+            <li><a href="templates/multimedia.php">Multimédia</a></li>
+            <li><a href="templates/maison.php">Maison</a></li>
+            <li><a href="templates/loisirs.php">Loisirs</a></li>
+            <li><a href="templates/services.php">Services</a></li>
         </ul>
 
         <h3>Derniers articles ajoutés</h3>
@@ -76,7 +76,7 @@
             </table>
         </div>
 
-    <script src="../js/interaction.js"></script>
+    <script src="js/interaction.js"></script>
 
     <footer>
         <div class="footer-container">
