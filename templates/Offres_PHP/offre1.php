@@ -18,13 +18,13 @@
         </div>
         <nav class="navbar">
             <a href="../index.php">Accueil</a>
-            <a href="../a-propos.php">À Propos</a>
-            <a href="../inscription.php">Inscription</a>
-            <a href="../offre.php" class="active" aria-current="page">Offres</a>
-            <a href="../connexion.php">Connexion</a>
-            <a href="../avis.php">Avis</a>
-            <a href="../contact.php">Contact</a>
-            <a href="../cookies.php">Cookies</a>
+            <a href="a-propos.php">À Propos</a>
+            <a href="inscription.php">Inscription</a>
+            <a href="offre.php" class="active" aria-current="page">Offres</a>
+            <a href="connexion.php">Connexion</a>
+            <a href="avis.php">Avis</a>
+            <a href="contact.php">Contact</a>
+            <a href="cookies.php">Cookies</a>
         </nav>
     </header>
 
