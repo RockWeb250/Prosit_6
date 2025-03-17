@@ -15,7 +15,7 @@
     </div>
 
     <nav class="navbar">
-        <a href="home.php">Accueil</a>
+        <a href="../index.php">Accueil</a>
         <a href="a-propos.php">À Propos</a>
         <a href="inscription.php" class="active" aria-current="page">Inscription</a>
         <a href="offre.php">Offres</a>

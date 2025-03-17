@@ -212,7 +212,7 @@ $offersPage = array_slice($offers, $start, $perPage);
             <img src="../Images/BonPlan.png" alt="Le Bon Plan" class="logo">
         </div>
         <nav class="navbar">
-            <a href="home.php">Accueil</a>
+            <a href="../index.php">Accueil</a>
             <a href="a-propos.php">À Propos</a>
             <a href="inscription.php">Inscription</a>
             <a href="offre.php" class="active" aria-current="page">Offres</a>

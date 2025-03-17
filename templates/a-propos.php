@@ -14,7 +14,7 @@
       <img src="../Images/BonPlan.png" alt="Le Bon Plan" class="logo">
     </div>
     <nav class="navbar">
-      <a href="home.php">Accueil</a>
+      <a href="../index.php">Accueil</a>
       <a href="a-propos.php" class="active" aria-current="page">À Propos</a>
       <a href="inscription.php">Inscription</a>
       <a href="offre.php">Offres</a>
