@@ -622,29 +622,9 @@ form button {
     background-color: #f2f2f2;
 }
 
-/* Status styles */
-.status {
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-weight: bold;
-    display: inline-block;
-    min-width: 100px;
-}
-
-.status.acceptée {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.status.refusée {
-    background-color: #FF5252;
-    color: white;
-}
-
-.status.en-attente {
-    background-color: #FFC107;
-    color: black;
-}
+/* ============================= */
+/* Bouton Candidatures */
+/* ============================= */
 
 .status-button-container {
     display: flex;
