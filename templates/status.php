@@ -25,6 +25,10 @@
     </header>
 
     <main>
+        <div class="status-button-container">
+            <a href="offre.php" class="btn-status"> ⭠ Retourner aux offres</a>
+        </div>
+
         <h1 class="page-title">Statuts des Candidatures</h1>
         <table class="styled-table">
             <thead>
@@ -38,10 +42,15 @@
                 {% for offer in offers %}
                 <tr>
                     <td>{{ offer.id }}</td>
-                    <td>{{ offer.offer }}</td>
-                    <td class="status {{ offer.status|lower|replace(" ", " -") }}">{{ offer.status }}</td>
+                    <td>{{ offer.offer }}</td> 
+                    <td class="status {{ offer.status|lower|replace(' ', '-') }}">{{ offer.status }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">Aucune offre trouvée</td>
                 </tr>
                 {% endfor %}
+
             </tbody>
         </table>
     </main>

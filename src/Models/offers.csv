@@ -1,21 +1,21 @@
 id,offer,status
-1,Stage - Administrateur Système et Réseau H/F,Refusée
-2,Stage - Analyste Cybersécurité,En attente
-3,Stage - Ingénieur en Intelligence Artificielle,Refusée
-4,Stage - Chef de Projet Digital,Refusée
-5,Stage - Développeur Mobile iOS/Android,En attente
-6,Stage - Consultant en Stratégie,Acceptée
-7,Stage - Graphiste UI/UX Designer,Refusée
-8,Stage - Ingénieur DevOps,Acceptée
-9,Stage - Data Analyst,Acceptée
-10,Stage - Simulation en Laboratoire,Refusée
-11,Stage - Analyste Financier,Refusée
-12,Stage - Ingénieur en Systèmes Embarqués,Acceptée
-13,Stage - Data Scientist,Refusée
-14,Stage - Développeur Web Full-Stack,Refusée
-15,Stage - Consultant Marketing Digital,En attente
-16,Stage - Développeur Blockchain,En attente
-17,Stage - Chargé de Communication,En attente
-18,Stage - Ingénieur Cloud & DevOps,Refusée
-19,Stage - Responsable Énergies Renouvelables,Acceptée
-20,Stage - Consultant Supply Chain,Acceptée
+1,Stage - Administrateur Système et Réseau H/F,Rejected
+2,Stage - Analyste Cybersécurité,Pending
+3,Stage - Ingénieur en Intelligence Artificielle,Rejected
+4,Stage - Chef de Projet Digital,Rejected
+5,Stage - Développeur Mobile iOS/Android,Pending
+6,Stage - Consultant en Stratégie,Accepted
+7,Stage - Graphiste UI/UX Designer,Rejected
+8,Stage - Ingénieur DevOps,Accepted
+9,Stage - Data Analyst,Accepted
+10,Stage - Simulation en Laboratoire,Rejected
+11,Stage - Analyste Financier,Rejected
+12,Stage - Ingénieur en Systèmes Embarqués,Accepted
+13,Stage - Data Scientist,Rejected
+14,Stage - Développeur Web Full-Stack,Rejected
+15,Stage - Consultant Marketing Digital,Pending
+16,Stage - Développeur Blockchain,Pending
+17,Stage - Chargé de Communication,Pending
+18,Stage - Ingénieur Cloud & DevOps,Rejected
+19,Stage - Responsable Énergies Renouvelables,Accepted
+20,Stage - Consultant Supply Chain,Accepted

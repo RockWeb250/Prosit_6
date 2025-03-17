@@ -38,14 +38,14 @@ class OfferController extends Controller
         echo $this->templateEngine->render('a-propos.php');
     }
 
-    public function show_status() {
+    public function show_status()
+    {
         $model = new OfferModel();
-        $acceptedOffers = $model->acceptedOffer();
-        $refusedOffers = $model->refusedOffer();
-        $pendingOffers = $model->pendingOffer();
+        $offers = $model->getAllOffers();
+
         echo $this->templateEngine->render('status.php', [
-            'acceptedOffers' => $acceptedOffers,
-            'refusedOffers' => $refusedOffers
+            'offers' => $offers
         ]);
     }
+
 }
