@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lebonplan - Site d'annonces</title>
-    <link rel="stylesheet" type="text/css" href="../../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 
 <body>
@@ -17,13 +17,13 @@
         </div>
         <nav class="navbar">
             <a href="index.php" class="active" aria-current="page">Accueil</a>
-            <a href="../../PHP/a-propos.php">À Propos</a>
-            <a href="../../PHP/inscription.php">Inscription</a>
-            <a href="../../PHP/offre.php">Offres</a>
-            <a href="../../PHP/connexion.php">Connexion</a>
-            <a href="../../PHP/avis.php">Avis</a>
-            <a href="../../PHP/contact.php">Contact</a>
-            <a href="../../PHP/cookies.php">Cookies</a>
+            <a href="a-propos.php">À Propos</a>
+            <a href="inscription.php">Inscription</a>
+            <a href="offre.php">Offres</a>
+            <a href="connexion.php">Connexion</a>
+            <a href="avis.php">Avis</a>
+            <a href="contact.php">Contact</a>
+            <a href="cookies.php">Cookies</a>
         </nav>
     </header>
     
@@ -33,13 +33,13 @@
 
         <h3>Catégories</h3>
         <ul class="categories">
-            <li><a href="../../prosit_3/PHP/immobilier.php">Immobilier</a></li>
-            <li><a href="../../prosit_3/PHP/vehicule.php">Véhicules</a></li>
-            <li><a href="../../prosit_3/PHP/vetements.php">Vêtements</a></li>
-            <li><a href="../../prosit_3/PHP/multimedia.php">Multimédia</a></li>
-            <li><a href="../../prosit_3/PHP/maison.php">Maison</a></li>
-            <li><a href="../../prosit_3/PHP/loisirs.php">Loisirs</a></li>
-            <li><a href="../../prosit_3/PHP/services.php">Services</a></li>
+            <li><a href="immobilier.php">Immobilier</a></li>
+            <li><a href="vehicule.php">Véhicules</a></li>
+            <li><a href="vetements.php">Vêtements</a></li>
+            <li><a href="multimedia.php">Multimédia</a></li>
+            <li><a href="maison.php">Maison</a></li>
+            <li><a href="loisirs.php">Loisirs</a></li>
+            <li><a href="services.php">Services</a></li>
         </ul>
 
         <h3>Derniers articles ajoutés</h3>
@@ -76,7 +76,7 @@
             </table>
         </div>
 
-    <script src="../../js/interaction.js"></script>
+    <script src="../js/interaction.js"></script>
 
     <footer>
         <div class="footer-container">
@@ -90,7 +90,7 @@
             </div>
             <hr>
             <div class="footer-column">
-                <p><a href="../../PHP/politique-confidentialite.php" class="footer-link">Politique de confidentialité</a></p>
+                <p><a href="politique-confidentialite.php" class="footer-link">Politique de confidentialité</a></p>
             </div>
         </div>
     </footer>
