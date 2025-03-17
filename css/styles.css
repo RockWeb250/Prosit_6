@@ -622,6 +622,20 @@ form button {
 }
 
 /* Status styles */
+.status-button-container {
+    color : white;
+    background-color: #f3af82f3;
+    padding: 10px 15px;
+    border: 2px solid black;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.status-button-container:hover {
+    background-color: #f3af82;
+
+}
+
 .status {
     padding: 6px 12px;
     border-radius: 5px;

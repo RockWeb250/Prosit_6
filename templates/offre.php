@@ -233,6 +233,10 @@ $offersPage = array_slice($offers, $start, $perPage);
             <button type="reset" class="reset-btn">Effacer</button>
         </form>
 
+        <div class="status-button-container">
+            <a href="status.php" class="btn-status">Voir mes candidatures</a>
+        </div>
+
         <h3 class="categorie-title">Liste des offres disponibles</h3>
         <div class="offers-container">
             <?php foreach ($offersPage as $offer): ?>
