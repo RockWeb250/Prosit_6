@@ -91,7 +91,6 @@ class OfferModel extends Model {
         return $data;
     }
 
-
     /**
      * Add a new offer to the model.
      * 

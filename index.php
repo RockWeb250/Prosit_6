@@ -33,7 +33,7 @@ switch ($uri) {
         $controller->aboutPage();
         break;
     case 'show_status':
-        $controller->showStatus();
+        $controller->show_Status();
         break;
     default:
         echo '404 Not Found';
