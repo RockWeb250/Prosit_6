@@ -35,11 +35,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% for task in tasks %}
+                {% for offer in offers %}
                 <tr>
-                    <td>{{ task.id }}</td>
-                    <td>{{ task.task }}</td>
-                    <td class="status {{ task.status|lower|replace(" ", " -") }}">{{ task.status }}</td>
+                    <td>{{ offer.id }}</td>
+                    <td>{{ offer.offer }}</td>
+                    <td class="status {{ offer.status|lower|replace(" ", " -") }}">{{ offer.status }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
