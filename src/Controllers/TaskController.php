@@ -60,7 +60,7 @@ class TaskController extends Controller
         // Retrieve the list of tasks from the model
         $tasks = $this->model->getAllTasks();
         // Render the history.twig.html template with the list of tasks
-        echo $this->templateEngine->render('history.twig.html', ['tasks' => $tasks]);
+        echo $this->templateEngine->render('politique-confidentialite.php', ['tasks' => $tasks]);
     }
 
     public function uncheckTask()
@@ -80,6 +80,6 @@ class TaskController extends Controller
     public function aboutPage()
     {
         // Render the about.twig.html template
-        echo $this->templateEngine->render('about.twig.html');
+        echo $this->templateEngine->render('a-propos.php');
     }
 }
