@@ -7,13 +7,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lebonplan - Site d'annonces</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
 <body>
     <header>
         <div class="text-center">
-            <img src="../Images/BonPlan.png" alt="Le Bon Plan" class="logo">
+            <img src="Images/BonPlan.png" alt="Le Bon Plan" class="logo">
         </div>
         <nav class="navbar">
             <a href="index.php" class="active" aria-current="page">Accueil</a>
@@ -90,7 +90,7 @@
             </div>
             <hr>
             <div class="footer-column">
-                <p><a href="politique-confidentialite.php" class="footer-link">Politique de confidentialité</a></p>
+                <p><a href="templates/politique-confidentialite.php" class="footer-link">Politique de confidentialité</a></p>
             </div>
         </div>
     </footer>
