@@ -42,14 +42,13 @@ class OfferModel extends Model {
     }
     
     /**
-     * Get all tasks with the status 'done'.
      * 
-     * @return array An array of tasks with the status 'done'.
+     * @return array An array of offers with the status 'done'.
      */
     public function acceptedOffer() {
         // Data array returned by the method
         $data = [];
-        // Retrieve all the tasks from the model
+        // Retrieve all the offers from the model
         foreach($this->getAllOffers() as $offer) {
             if ($offer['status'] === self::DONE_STATUS) {
                 $data[] = $offer;
@@ -58,34 +57,49 @@ class OfferModel extends Model {
         return $data;
     }
 
+    const REFUSED_STATUS = "refused";
+
     /**
-     * Get all tasks with the status 'todo'.
+     * Get all offers with the status 'refused'.
      * 
-     * @return array An array of tasks with the status 'todo'.
+     * @return array An array of offers with the status 'refused'.
      */
     public function refusedOffer() {
-        // Data array returned by the method
         $data = [];
-        // Retrieve all the tasks from the model
         foreach($this->getAllOffers() as $offer) {
-            // Keep only the tasks with the status 'todo' (self::TODO_STATUS)
-            if ($offer['status'] === self::TODO_STATUS) {
+            if ($offer['status'] === self::REFUSED_STATUS) {
                 $data[] = $offer;
             }
         }
         return $data;
     }
 
+    const PENDING_STATUS = "pending";
+
     /**
-     * Add a new task to the model.
+     * Get all offers with the status 'pending'.
      * 
-     * @param string $task The task to add.
+     * @return array An array of offers with the status 'pending'.
+     */
+    public function pendingOffer(): array {
+        $data = [];
+        foreach($this->getAllOffers() as $offer) {
+            if ($offer['status'] === self::PENDING_STATUS) {
+                $data[] = $offer;
+            }
+        }
+        return $data;
+    }
+
+
+    /**
+     * Add a new offer to the model.
+     * 
+     * @param string $offer The offer to add.
      * @return mixed The result of the insert operation.
      */
     public function addOffer($offer) {
-        // Create a new record with the task and the status 'todo' (by default)
-        $record = ['task' => $offer, 'status' => self::TODO_STATUS];
-        // Call the insertRecord method of the connection property and return the result
+        $record = ['task' => $offer, 'status' => self::PENDING_STATUS];
         $this->connection->insertRecord($record);
         return $this;
     }

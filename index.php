@@ -6,6 +6,7 @@
 
 require "vendor/autoload.php";
 
+use App\Controllers\OfferController;
 use App\Controllers\TaskController;
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
@@ -19,7 +20,7 @@ if (isset($_GET['uri'])) {
     $uri = '/';
 }
 
-$controller = new TaskController($twig);
+$controller = new OfferController($twig);
 
 switch ($uri) {
     case '/':
@@ -30,6 +31,9 @@ switch ($uri) {
         break;
     case 'about':
         $controller->aboutPage();
+        break;
+    case 'show_status':
+        $controller->showStatus();
         break;
     default:
         echo '404 Not Found';
