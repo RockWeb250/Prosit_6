@@ -590,11 +590,11 @@ form button {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-
 /* ============================= */
 /* STATUTS */
 /* ============================= */
 
+/* Table Styles */
 .styled-table {
     width: 80%;
     margin: 20px auto;
@@ -605,7 +605,8 @@ form button {
     overflow: hidden;
 }
 
-.styled-table th, .styled-table td {
+.styled-table th,
+.styled-table td {
     padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
@@ -622,20 +623,6 @@ form button {
 }
 
 /* Status styles */
-.status-button-container {
-    color : white;
-    background-color: #f3af82f3;
-    padding: 10px 15px;
-    border: 2px solid black;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.status-button-container:hover {
-    background-color: #f3af82;
-
-}
-
 .status {
     padding: 6px 12px;
     border-radius: 5px;
@@ -657,6 +644,31 @@ form button {
 .status.en-attente {
     background-color: #FFC107;
     color: black;
+}
+
+.status-button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.btn-status {
+    background-color: #ff6600;
+    color: white;
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    display: inline-block;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-status:hover {
+    background-color: #e65c00;
+    transform: scale(1.05);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 /* ============================= */

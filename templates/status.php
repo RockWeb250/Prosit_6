@@ -26,6 +26,9 @@
 
     <main>
         <h1 class="page-title">Statuts des Candidatures</h1>
+        <div class="status-button-container">
+            <a href="status.php" class="btn-status">Voir mes candidatures</a>
+        </div>
         <table class="styled-table">
             <thead>
                 <tr>
@@ -35,11 +38,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% for offer in offers %}
+                {% for task in tasks %}
                 <tr>
-                    <td>{{ offer.id }}</td>
-                    <td>{{ offer.offer }}</td>
-                    <td class="status {{ offer.status|lower|replace(" ", " -") }}">{{ offer.status }}</td>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.task }}</td>
+                    <td class="status {{ task.status|lower|replace(" ", " -") }}">{{ task.status }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
