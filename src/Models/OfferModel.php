@@ -2,14 +2,13 @@
 namespace App\Models;
 
 class OfferModel extends Model {
-    // Définition des statuts en anglais
     const ACCEPTED_STATUS = "Accepted";
     const REJECTED_STATUS = "Rejected";
     const PENDING_STATUS = "Pending";
+    const REMOVED_STATUS = "Removed";
 
     public function __construct($connection = null) {
         if (is_null($connection)) {
-            // Mise à jour pour correspondre aux clés du CSV
             $this->connection = new FileDatabase('offers', ['offer', 'status']);
         } else {
             $this->connection = $connection;
@@ -57,6 +56,12 @@ class OfferModel extends Model {
     public function addOffer($offer) {
         $record = ['offer' => $offer, 'status' => self::PENDING_STATUS];
         $this->connection->insertRecord($record);
+        return $this;
+    }
+
+    public function removeOffer($offer) {
+        $record = ['offer' => $offer, 'status' => self::REMOVED_STATUS];
+        $this->connection->deleteRecord($record);
         return $this;
     }
 }

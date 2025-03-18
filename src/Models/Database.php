@@ -35,4 +35,13 @@ interface Database {
      * @return bool True if the record was updated successfully, false otherwise.
      */
     public function updateRecord($id, $record);
-}
+
+    /**
+     * Deletes a specific record from the database.
+     *
+     * @param mixed $record The record to delete.
+     * @return bool True if the record was deleted successfully, false otherwise.
+     */
+    public function deleteRecord($record);
+    }
+?>

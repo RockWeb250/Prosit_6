@@ -10,7 +10,7 @@ class FileDatabase implements Database {
     /**
      * @var string The path to the database file.
      */
-    private $path = __DIR__.DIRECTORY_SEPARATOR.'data.csv';
+    private $path = __DIR__.DIRECTORY_SEPARATOR.'offers.csv';
 
     /**
      * @var int The next available ID for a new record.
@@ -176,4 +176,44 @@ class FileDatabase implements Database {
 
         return $updated;
     }
+
+    /**
+     * Deletes a record from the database.
+     * @param array $record The record to be deleted.
+     * @return bool True if the record was deleted successfully, false otherwise.
+     */
+    public function deleteRecord($record) {
+        if (!file_exists($this->path) or !is_readable($this->path)) {
+            return false;
+        }
+
+        $file = fopen($this->path, 'r');
+        $header = fgetcsv($file);
+        $data = [];
+        $deleted = false; // flag to check if the record was deleted
+
+        // Append header first
+        $data[] = $header;
+
+        while ($row = fgetcsv($file)) {
+            if ($row[0] == $record['id']) {
+                $deleted = true;
+                continue;
+            }
+            $data[] = $row;
+        }
+
+        fclose($file);
+
+        if ($deleted) {
+            $file = fopen($this->path, 'w');
+            foreach ($data as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        }
+
+        return $deleted;
+    }
 }
+?>

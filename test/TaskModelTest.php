@@ -1,58 +1,72 @@
 <?php
 namespace App\Tests;
+use App\Models\OfferModel;
 use PHPUnit\Framework\TestCase;
-use App\Models\TaskModel;
 use App\Models\FileDatabase;
 
-class TaskModelTest extends TestCase {
+class OfferModelTest extends TestCase {
 
-    public function testGetToDoTasks() {
+    public function testGetAcceptedOffers() {
         
         $connection = $this->createStub(FileDatabase::class);
         $connection->method('getAllRecords')->willReturn([
-            ['task' => 'test task 1', 'status' => 'todo'],
-            ['task' => 'test task 2', 'status' => 'todo'],
-            ['task' => 'test task 3', 'status' => 'done'],
+            ['offer' => 'test offer 1', 'status' => 'accepted'],
+            ['offer' => 'test offer 2', 'status' => 'accepted'],
+            ['offer' => 'test offer 3', 'status' => 'rejected'],
         ]);
 
-        $model = new TaskModel($connection);
-        $tasks = $model->getToDoTasks();
+        $model = new OfferModel($connection);
+        $offers = $model->getAcceptedOffers();
 
-        $this->assertSame(2, count($tasks));
-        $this->assertSame('test task 1', $tasks[0]['task']);
-        $this->assertSame('test task 2', $tasks[1]['task']);
+        $this->assertSame(2, count($offers));
+        $this->assertSame('test offer 1', $offers[0]['offer']);
+        $this->assertSame('test offer 2', $offers[1]['offer']);
     }
 
-    public function testAddTask() {
+    public function testAddOffer() {
         
         $connection = $this->createMock(FileDatabase::class);
         $connection->method('insertRecord')->willReturn(true);
 
-        // We expect the insertRecord method to be called once with the following data array: ['task' => 'test task', 'status' => 'todo']
+        // We expect the insertRecord method to be called once with the following data array: ['offer' => 'test offer', 'status' => 'pending']
         $connection->expects($this->once())
                    ->method('insertRecord')
-                   ->with($this->equalTo(['task' => 'test task', 'status' => 'todo']));
+                   ->with($this->equalTo(['offer' => 'test offer', 'status' => 'pending']));
 
-        $model = new TaskModel($connection);
-        $result = $model->addTask('test task');
+        $model = new OfferModel($connection);
+        $result = $model->addOffer('test offer');
 
         $this->assertSame($model, $result);
     }
 
-    public function testGetDoneTasks() {
+    public function testGetRejectedOffers() {
         $connection = $this->createStub(FileDatabase::class);
         $connection->method('getAllRecords')->willReturn([
-            ['task' => 'test task 1', 'status' => 'todo'],
-            ['task' => 'test task 2', 'status' => 'done'],
-            ['task' => 'test task 3', 'status' => 'done'],
+            ['offer' => 'test offer 1', 'status' => 'accepted'],
+            ['offer' => 'test offer 2', 'status' => 'rejected'],
+            ['offer' => 'test offer 3', 'status' => 'rejected'],
         ]);
 
-        $model = new TaskModel($connection);
-        $tasks = $model->getDoneTasks();
+        $model = new OfferModel($connection);
+        $offers = $model->getRejectedOffers();
 
-        $this->assertSame(2, count($tasks));
-        $this->assertSame('test task 2', $tasks[0]['task']);
-        $this->assertSame('test task 3', $tasks[1]['task']);
+        $this->assertSame(2, count($offers));
+        $this->assertSame('test offer 2', $offers[0]['offer']);
+        $this->assertSame('test offer 3', $offers[1]['offer']);
     }
 
+    public function testRemoveOffer() {
+        $connection = $this->createMock(FileDatabase::class);
+        $connection->method('deleteRecord')->willReturn(true);
+
+        // We expect the deleteRecord method to be called once with the following data array: ['offer' => 'test offer', 'status' => 'removed']
+        $connection->expects($this->once())
+                   ->method('deleteRecord')
+                   ->with($this->equalTo(['offer' => 'test offer', 'status' => 'removed']));
+
+        $model = new OfferModel($connection);
+        $result = $model->removeOffer('test offer');
+
+        $this->assertSame($model, $result);
+    }
 }
