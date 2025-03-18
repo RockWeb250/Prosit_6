@@ -10,13 +10,13 @@ class OfferModelTest extends TestCase {
         
         $connection = $this->createStub(FileDatabase::class);
         $connection->method('getAllRecords')->willReturn([
-            ['offer' => 'test offer 1', 'status' => 'accepted'],
-            ['offer' => 'test offer 2', 'status' => 'accepted'],
-            ['offer' => 'test offer 3', 'status' => 'rejected'],
+            ['offer' => 'test offer 1', 'status' => 'Accepted'],
+            ['offer' => 'test offer 2', 'status' => 'Accepted'],
+            ['offer' => 'test offer 3', 'status' => 'Rejected'],
         ]);
 
         $model = new OfferModel($connection);
-        $offers = $model->getAcceptedOffers();
+        $offers = $model->acceptedOffer();
 
         $this->assertSame(2, count($offers));
         $this->assertSame('test offer 1', $offers[0]['offer']);
@@ -28,10 +28,10 @@ class OfferModelTest extends TestCase {
         $connection = $this->createMock(FileDatabase::class);
         $connection->method('insertRecord')->willReturn(true);
 
-        // We expect the insertRecord method to be called once with the following data array: ['offer' => 'test offer', 'status' => 'pending']
+        // We expect the insertRecord method to be called once with the following data array: ['offer' => 'test offer', 'status' => 'Pending']
         $connection->expects($this->once())
                    ->method('insertRecord')
-                   ->with($this->equalTo(['offer' => 'test offer', 'status' => 'pending']));
+                   ->with($this->equalTo(['offer' => 'test offer', 'status' => 'Pending']));
 
         $model = new OfferModel($connection);
         $result = $model->addOffer('test offer');
@@ -42,13 +42,13 @@ class OfferModelTest extends TestCase {
     public function testGetRejectedOffers() {
         $connection = $this->createStub(FileDatabase::class);
         $connection->method('getAllRecords')->willReturn([
-            ['offer' => 'test offer 1', 'status' => 'accepted'],
-            ['offer' => 'test offer 2', 'status' => 'rejected'],
-            ['offer' => 'test offer 3', 'status' => 'rejected'],
+            ['offer' => 'test offer 1', 'status' => 'Accepted'],
+            ['offer' => 'test offer 2', 'status' => 'Rejected'],
+            ['offer' => 'test offer 3', 'status' => 'Rejected'],
         ]);
 
         $model = new OfferModel($connection);
-        $offers = $model->getRejectedOffers();
+        $offers = $model->rejectedOffer();
 
         $this->assertSame(2, count($offers));
         $this->assertSame('test offer 2', $offers[0]['offer']);
@@ -59,10 +59,10 @@ class OfferModelTest extends TestCase {
         $connection = $this->createMock(FileDatabase::class);
         $connection->method('deleteRecord')->willReturn(true);
 
-        // We expect the deleteRecord method to be called once with the following data array: ['offer' => 'test offer', 'status' => 'removed']
+        // We expect the deleteRecord method to be called once with the following data array: ['offer' => 'test offer', 'status' => 'Removed']
         $connection->expects($this->once())
                    ->method('deleteRecord')
-                   ->with($this->equalTo(['offer' => 'test offer', 'status' => 'removed']));
+                   ->with($this->equalTo(['offer' => 'test offer', 'status' => 'Removed']));
 
         $model = new OfferModel($connection);
         $result = $model->removeOffer('test offer');
@@ -70,3 +70,4 @@ class OfferModelTest extends TestCase {
         $this->assertSame($model, $result);
     }
 }
+?>
