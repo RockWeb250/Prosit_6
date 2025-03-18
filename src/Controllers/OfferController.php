@@ -38,8 +38,7 @@ class OfferController extends Controller
         echo $this->templateEngine->render('a-propos.php');
     }
 
-    public function show_status()
-    {
+    public function show_status() {
         $offers = $this->model->getAllOffers();
         echo $this->templateEngine->render('status.php', [
             'offers' => $offers

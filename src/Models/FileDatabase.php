@@ -81,12 +81,12 @@ class FileDatabase implements Database {
         
         $file = fopen($this->path, 'r');
         $header = fgetcsv($file);
-
+    
         while ($row = fgetcsv($file)) {
             $record = array_combine($header, $row);
             $data[] = $record;
         }
-
+    
         fclose($file);
         return $data;
     }
