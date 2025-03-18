@@ -40,12 +40,11 @@ class OfferController extends Controller
 
     public function show_status()
     {
-        $model = new OfferModel();
-        $offers = $model->getAllOffers();
-
+        $offers = $this->model->getAllOffers();
         echo $this->templateEngine->render('status.php', [
             'offers' => $offers
         ]);
     }
 
 }
+?>
