@@ -16,7 +16,14 @@ class OfferModel extends Model {
     }
 
     public function getAllOffers() {
-        return $this->connection->getAllRecords();
+        $test = $this->connection->getAllRecords();
+        if (!empty($test)) {
+            echo "+++";
+        }
+        else {
+            echo "---";
+        }
+        return $test;
     }
 
     public function getOffer($id) {

@@ -44,6 +44,5 @@ class OfferController extends Controller
             'offers' => $offers
         ]);
     }
-
 }
 ?>

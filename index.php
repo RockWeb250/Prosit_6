@@ -7,7 +7,6 @@
 require "vendor/autoload.php";
 
 use App\Controllers\OfferController;
-use App\Controllers\TaskController;
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
