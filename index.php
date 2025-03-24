@@ -29,8 +29,8 @@ switch (trim($uri, '/')) {
     case '':
         $controller->welcomePage();
         break;
-    case 'add_offer':
-        $controller->addOffer();
+    case 'offres':
+        $controller->offersPage();
         break;
     case 'about':
         $controller->aboutPage();

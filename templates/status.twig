@@ -26,7 +26,8 @@
 
     <main>
         <div class="status-button-container">
-            <a href="offre.php" class="btn-status"> ⭠ Retourner aux offres</a>
+            <a href="/index.php?uri=offres" class="btn-status"> ⭠ Retourner aux offres</a>
+
         </div>
 
         <h1 class="page-title">Statuts des Candidatures</h1>
@@ -38,12 +39,12 @@
                     <th>Statut</th>
                 </tr>
             </thead>
-                {% if offers is not empty %}
-                {% for offer in offers %}
-                <tr>
-                    <td>{{ offer.id }}</td>
-                    <td>{{ offer.offer }}</td>
-                    <td class="status 
+            {% if offers is not empty %}
+            {% for offer in offers %}
+            <tr>
+                <td>{{ offer.id }}</td>
+                <td>{{ offer.offer }}</td>
+                <td class="status 
     {% if offer.status is defined and offer.status %}
         {{ offer.status|lower|replace({' ': '-'}) }}
     {% else %}
@@ -51,14 +52,14 @@
     {% endif %}
 " data-id="{{ offer.id }}">
 
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                    <td colspan="3">Aucune offre trouvée</td>
-                </tr>
-                {% endif %}
-                </tbody>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">Aucune offre trouvée</td>
+            </tr>
+            {% endif %}
+            </tbody>
         </table>
     </main>
 

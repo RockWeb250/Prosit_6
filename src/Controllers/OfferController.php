@@ -20,17 +20,10 @@ class OfferController extends Controller
         echo $this->templateEngine->render('home.php', ['offers' => $offers]);
     }
 
-    public function addOffer()
+    public function offersPage()
     {
-        if (!isset($_POST['offer'])) {
-            header('Location: /');
-            exit();
-        }
-
-        $offer = $_POST['offer'];
-        $this->model->addOffer($offer);
-        header('Location: /');
-        exit();
+        $offers = $this->model->getAllOffers();
+        echo $this->templateEngine->render('offre.twig', ['offers' => $offers]);
     }
 
     public function aboutPage()
