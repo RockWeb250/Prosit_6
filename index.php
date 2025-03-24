@@ -25,8 +25,8 @@ if (isset($_GET['uri'])) {
 
 $controller = new OfferController($twig);
 
-switch ($uri) {
-    case '/':
+switch (trim($uri, '/')) {
+    case '':
         $controller->welcomePage();
         break;
     case 'add_offer':
@@ -42,5 +42,6 @@ switch ($uri) {
         echo '404 Not Found';
         break;
 }
+
 
 ?>

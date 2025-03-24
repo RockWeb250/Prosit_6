@@ -79,16 +79,6 @@ class FileDatabase implements Database
     public function getAllRecords()
     {
         $data = [];
-
-        echo "<p>Chemin du fichier : " . $this->path . "</p>";
-
-        if (!file_exists($this->path)) {
-            echo "<p>❌ Fichier non trouvé à ce chemin.</p>";
-        }
-        if (!is_readable($this->path)) {
-            echo "<p>❌ Fichier non lisible.</p>";
-        }
-
         if (!file_exists($this->path) or !is_readable($this->path)) {
             return $data;
         }

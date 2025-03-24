@@ -17,12 +17,6 @@ class OfferModel extends Model {
 
     public function getAllOffers() {
         $test = $this->connection->getAllRecords();
-        if (!empty($test)) {
-            echo "+++";
-        }
-        else {
-            echo "---";
-        }
         return $test;
     }
 
