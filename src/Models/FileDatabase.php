@@ -80,17 +80,33 @@ class FileDatabase implements Database
     {
         $data = [];
 
+        echo "<p>Chemin du fichier : " . $this->path . "</p>";
+
+        if (!file_exists($this->path)) {
+            echo "<p>❌ Fichier non trouvé à ce chemin.</p>";
+        }
+        if (!is_readable($this->path)) {
+            echo "<p>❌ Fichier non lisible.</p>";
+        }
+
         if (!file_exists($this->path) or !is_readable($this->path)) {
             return $data;
         }
 
         $file = fopen($this->path, 'r');
         $header = fgetcsv($file, 0, ';');
+        echo "<pre>Header : ";
+        print_r($header);
+        echo "</pre>";
         while ($row = fgetcsv($file, 0, ';')) {
-
+            echo "<pre>Ligne lue : ";
+            print_r($row);
+            echo "</pre>";
+        
             $record = array_combine($header, $row);
             $data[] = $record;
         }
+        
 
         fclose($file);
         return $data;

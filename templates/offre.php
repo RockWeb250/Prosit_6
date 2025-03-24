@@ -234,7 +234,8 @@ $offersPage = array_slice($offers, $start, $perPage);
         </form>
 
         <div class="status-button-container">
-            <a href="status.php" class="btn-status">⭢ Voir mes candidatures</a>
+            <a href="/index.php?uri=show_status" class="btn-status">⭢ Voir mes candidatures</a>
+
         </div>
 
         <h3 class="categorie-title">Liste des offres disponibles</h3>
