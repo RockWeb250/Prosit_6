@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Statuts des Candidatures</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
 <body>
     <header>
         <div class="text-center">
-            <img src="../Images/BonPlan.png" alt="Le Bon Plan" class="logo">
+            <img src="Images/BonPlan.png" alt="Le Bon Plan" class="logo">
         </div>
         <nav class="navbar">
-            <a href="../index.php">Accueil</a>
+            <a href="index.php">Accueil</a>
             <a href="a-propos.php">À Propos</a>
             <a href="inscription.php">Inscription</a>
             <a href="offre.php">Offres</a>
@@ -56,7 +56,7 @@
         </table>
     </main>
 
-    <script src="../js/interaction.js"></script>
+    <script src="js/interaction.js"></script>
 
     <footer>
         <div class="footer-container">
