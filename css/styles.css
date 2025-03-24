@@ -651,6 +651,11 @@ form button {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
+.status.no-status {
+    background-color: #CCCCCC;
+    color: #333;
+}
+
 .status-options {
     display: flex;
     gap: 10px;
@@ -664,12 +669,13 @@ form button {
 }
 
 .status-btn {
-    padding: 8px 12px;
+    padding: 8px 15px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 8px;
     color: white;
     font-weight: bold;
+    font-size: 14px;
     transition: background 0.3s;
 }
 
@@ -686,8 +692,27 @@ form button {
 }
 
 .status-btn:hover {
-    opacity: 0.8;
+    opacity: 0.9;
 }
+
+.status {
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.status.accepted {
+    background-color: #4CAF50;
+}
+
+.status.pending {
+    background-color: #FFA500;
+}
+
+.status
+
 
 
 /* ============================= */

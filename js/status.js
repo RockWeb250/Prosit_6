@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const statusLabels = {
+        Accepted: "Acceptée",
+        Pending: "En Attente",
+        Rejected: "Refusée"
+    };
+
     const statusColors = {
         Accepted: "accepted",
         Pending: "pending",
@@ -7,29 +13,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll("td.status").forEach(cell => {
         cell.addEventListener("click", function (e) {
-            // Supprime tout autre menu déjà ouvert
             document.querySelectorAll(".status-options").forEach(el => el.remove());
-
-            const currentStatus = cell.textContent.trim();
 
             const optionsBox = document.createElement("div");
             optionsBox.classList.add("status-options");
 
-            Object.keys(statusColors).forEach(status => {
+            Object.keys(statusLabels).forEach(statusKey => {
                 const button = document.createElement("button");
-                button.textContent = status;
-                button.classList.add("status-btn", statusColors[status]);
+                button.textContent = statusLabels[statusKey];
+                button.classList.add("status-btn", statusColors[statusKey]);
 
                 button.addEventListener("click", () => {
-                    cell.textContent = status;
-                    cell.className = `status ${statusColors[status]}`;
+                    cell.textContent = statusLabels[statusKey];
+                    cell.className = `status ${statusColors[statusKey]}`;
                     optionsBox.remove();
                 });
 
                 optionsBox.appendChild(button);
             });
 
-            // Positionne le menu sous la cellule
             cell.style.position = "relative";
             cell.appendChild(optionsBox);
 
@@ -37,8 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Ferme le menu si clic en dehors
-    document.addEventListener("click", function () {
+    document.addEventListener("click", () => {
         document.querySelectorAll(".status-options").forEach(el => el.remove());
     });
 });
