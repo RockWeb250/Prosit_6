@@ -2,13 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const statusLabels = {
         Accepted: "Acceptée",
         Pending: "En Attente",
-        Rejected: "Refusée"
+        Rejected: "Refusée",
+        Unsent : "Pas envoyée"
     };
 
     const statusClasses = {
         Accepted: "accepted",
         Pending: "pending",
-        Rejected: "refused"
+        Rejected: "refused",
+        Unsent : "unsent"
     };
 
     // 1. Appliquer les statuts sauvegardés ou afficher "Pas envoyée"
@@ -41,13 +43,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.textContent = statusLabels[statusKey];
                 button.classList.add("status-btn", statusClasses[statusKey]);
 
-                button.addEventListener("click", () => {
+                button.addEventListener("click", (event) => {
+                    event.stopPropagation();
+
                     cell.textContent = statusLabels[statusKey];
                     cell.className = `status ${statusClasses[statusKey]}`;
                     localStorage.setItem("status_" + offerId, statusKey);
-                    optionsBox.remove();
-                    document.querySelectorAll(".status-options").forEach(el => el.remove());
+
+                    setTimeout(() => {
+                        document.querySelectorAll(".status-options").forEach(el => el.remove());
+                    }, 10);
                 });
+
 
                 optionsBox.appendChild(button);
             });

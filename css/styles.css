@@ -651,9 +651,9 @@ form button {
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-.no-status {
+.status.no-status {
     background-color: #CCCCCC;
-    color: white;
+    color: black;
 }
 
 .status.accepted {
@@ -675,6 +675,7 @@ form button {
     display: flex;
     gap: 10px;
     margin-top: 5px;
+    margin-right: 80px;
     padding: 10px;
     border-radius: 5px;
     background-color: #fff;
@@ -703,6 +704,11 @@ form button {
 
 .status-btn.refused {
     background-color: #D32F2F;
+}
+
+.status-btn.unsent {
+    background-color: #CCCCCC;
+    color : black;
 }
 
 .status-btn:hover {
