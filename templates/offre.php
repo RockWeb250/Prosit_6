@@ -270,7 +270,7 @@ $offersPage = array_slice($offers, $start, $perPage);
             echo "<a href='offre.php?page=" . ($page - 1) . "'>Page Précédente</a>";
             echo "<a href='#' class='page-active'>$page</a>";
         }
-        echo "</div>";s
+        echo "</div>";
         ?>
     </main>
 
