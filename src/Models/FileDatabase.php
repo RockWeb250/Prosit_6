@@ -5,12 +5,13 @@ namespace App\Models;
  * Class FileDatabase
  * Implements the Database interface and provides functionality to interact with a CSV file-based database.
  */
-class FileDatabase implements Database {
+class FileDatabase implements Database
+{
 
     /**
      * @var string The path to the database file.
      */
-    private $path = __DIR__.DIRECTORY_SEPARATOR.'offers.csv';
+    private $path = __DIR__ . DIRECTORY_SEPARATOR . 'offers.csv';
 
     /**
      * @var int The next available ID for a new record.
@@ -22,10 +23,11 @@ class FileDatabase implements Database {
      * @param string|null $dbname The name of the database file.
      * @param array $cols The columns of the database table.
      */
-    public function __construct($dbname, $cols) {
-        
-        $this->path = __DIR__.DIRECTORY_SEPARATOR.$dbname.'.csv';
-        
+    public function __construct($dbname, $cols)
+    {
+
+        $this->path = __DIR__ . DIRECTORY_SEPARATOR . $dbname . '.csv';
+
 
         if (!file_exists($this->path)) {
             $file = fopen($this->path, 'w');
@@ -33,21 +35,22 @@ class FileDatabase implements Database {
             fputcsv($file, $cols);
             fclose($file);
         } else {
-            $this->updateNextId();   
+            $this->updateNextId();
         }
     }
 
     /**
      * Updates the next available ID based on the existing records in the database file.
      */
-    private function updateNextId() {
-        if(file_exists($this->path)) {
+    private function updateNextId()
+    {
+        if (file_exists($this->path)) {
             $file = fopen($this->path, 'r');
             $header = fgetcsv($file);
             $max_id = 0;
-            while($row = fgetcsv($file)) {
+            while ($row = fgetcsv($file)) {
                 //assuming the first column is the id
-                $max_id = max($max_id, (int)$row[0]);
+                $max_id = max($max_id, (int) $row[0]);
             }
             fclose($file);
             $this->nextId = $max_id + 1;
@@ -60,7 +63,8 @@ class FileDatabase implements Database {
      * Writes the data to the database file.
      * @param array $data The data to be written.
      */
-    private function write($data) {
+    private function write($data)
+    {
         $file = fopen($this->path, 'w');
         foreach ($data as $row) {
             fputcsv($file, $row);
@@ -72,21 +76,22 @@ class FileDatabase implements Database {
      * Retrieves all records from the database.
      * @return array The array of records.
      */
-    public function getAllRecords() {
+    public function getAllRecords()
+    {
         $data = [];
-        
+
         if (!file_exists($this->path) or !is_readable($this->path)) {
             return $data;
         }
-        
+
         $file = fopen($this->path, 'r');
-        $header = fgetcsv($file);
-    
-        while ($row = fgetcsv($file)) {
+        $header = fgetcsv($file, 0, ';');
+        while ($row = fgetcsv($file, 0, ';')) {
+
             $record = array_combine($header, $row);
             $data[] = $record;
         }
-    
+
         fclose($file);
         return $data;
     }
@@ -96,16 +101,16 @@ class FileDatabase implements Database {
      * @param int $id The ID of the record.
      * @return array|null The record if found, null otherwise.
      */
-    public function getRecord($id) {
+    public function getRecord($id)
+    {
 
         if (!file_exists($this->path) or !is_readable($this->path)) {
             return null;
         }
 
         $file = fopen($this->path, 'r');
-        $header = fgetcsv($file);
-
-        while ($row = fgetcsv($file)) {
+        $header = fgetcsv($file, 0, ';');
+        while ($row = fgetcsv($file, 0, ';')) {
             $record = array_combine($header, $row);
             if ($record['id'] == $id) {
                 fclose($file);
@@ -122,7 +127,8 @@ class FileDatabase implements Database {
      * @param array $record The record to be inserted.
      * @return int The ID of the inserted record.
      */
-    public function insertRecord($record) {
+    public function insertRecord($record)
+    {
         if (!file_exists($this->path) or !is_readable($this->path)) {
             return -1;
         }
@@ -140,13 +146,14 @@ class FileDatabase implements Database {
      * @param array $record The updated record.
      * @return bool True if the record was updated successfully, false otherwise.
      */
-    public function updateRecord($id, $record) {
+    public function updateRecord($id, $record)
+    {
         if (!file_exists($this->path) or !is_readable($this->path)) {
             return false;
         }
 
         $file = fopen($this->path, 'r');
-        $header = fgetcsv($file);
+        $header = fgetcsv($file, 0, ';');
         $data = [];
         $new_record = array_unshift($record, $id);
         $updated = false; // flag to check if the record was updated
@@ -154,8 +161,8 @@ class FileDatabase implements Database {
         //Append header first
         $data[] = $header;
 
-        while ($row = fgetcsv($file)) {
-    
+        while ($row = fgetcsv($file, 0, ';')) {
+
             if ($row[0] == $id) {
                 $row = $record;
                 $updated = true;
@@ -182,20 +189,21 @@ class FileDatabase implements Database {
      * @param array $record The record to be deleted.
      * @return bool True if the record was deleted successfully, false otherwise.
      */
-    public function deleteRecord($record) {
+    public function deleteRecord($record)
+    {
         if (!file_exists($this->path) or !is_readable($this->path)) {
             return false;
         }
 
         $file = fopen($this->path, 'r');
-        $header = fgetcsv($file);
+        $header = fgetcsv($file, 0, ';');
         $data = [];
         $deleted = false; // flag to check if the record was deleted
 
         // Append header first
         $data[] = $header;
 
-        while ($row = fgetcsv($file)) {
+        while ($row = fgetcsv($file, 0, ';')) {
             if ($row[0] == $record['id']) {
                 $deleted = true;
                 continue;
