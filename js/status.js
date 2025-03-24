@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     cell.className = `status ${statusClasses[statusKey]}`;
                     localStorage.setItem("status_" + offerId, statusKey);
                     optionsBox.remove();
+                    document.querySelectorAll(".status-options").forEach(el => el.remove());
                 });
 
                 optionsBox.appendChild(button);
