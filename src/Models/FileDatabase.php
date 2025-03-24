@@ -85,18 +85,10 @@ class FileDatabase implements Database
 
         $file = fopen($this->path, 'r');
         $header = fgetcsv($file, 0, ';');
-        echo "<pre>Header : ";
-        print_r($header);
-        echo "</pre>";
         while ($row = fgetcsv($file, 0, ';')) {
-            echo "<pre>Ligne lue : ";
-            print_r($row);
-            echo "</pre>";
-        
             $record = array_combine($header, $row);
             $data[] = $record;
         }
-        
 
         fclose($file);
         return $data;
