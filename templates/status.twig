@@ -39,20 +39,21 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($offers)): ?>
-                    <?php foreach ($offers as $offer): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($offer['id']) ?></td>
-                            <td><?= htmlspecialchars($offer['offer']) ?></td>
-                            <td class="status <?= strtolower(str_replace(' ', '-', $offer['status'])) ?>"><?= htmlspecialchars($offer['status']) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="3">Aucune offre trouvée</td>
-                    </tr>
-                <?php endif; ?>
+                {% if offers is not empty %}
+                {% for offer in offers %}
+                <tr>
+                    <td>{{ offer.id }}</td>
+                    <td>{{ offer.offer }}</td>
+                    <td class="status {{ offer.status|lower|replace({' ': '-'}) }}">{{ offer.status }}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3">Aucune offre trouvée</td>
+                </tr>
+                {% endif %}
             </tbody>
+
         </table>
     </main>
 
