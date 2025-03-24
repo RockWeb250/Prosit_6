@@ -5,26 +5,30 @@ document.addEventListener("DOMContentLoaded", function () {
         Rejected: "Refusée"
     };
 
-    const statusColors = {
+    const statusClasses = {
         Accepted: "accepted",
         Pending: "pending",
-        Rejected: "rejected"
+        Rejected: "refused"
     };
 
-    // Restaurer les statuts depuis localStorage
+    // 1. Appliquer les statuts sauvegardés ou afficher "Pas envoyée"
     document.querySelectorAll("td.status").forEach(cell => {
         const offerId = cell.dataset.id;
         const savedStatus = localStorage.getItem("status_" + offerId);
 
         if (savedStatus && statusLabels[savedStatus]) {
             cell.textContent = statusLabels[savedStatus];
-            cell.className = `status ${statusColors[savedStatus]}`;
+            cell.className = `status ${statusClasses[savedStatus]}`;
+        } else {
+            cell.textContent = "Pas envoyée";
+            cell.className = "status no-status";
         }
     });
 
-    // Gérer le clic
+    // 2. Gérer le clic sur une cellule (affiche les options)
     document.querySelectorAll("td.status").forEach(cell => {
         cell.addEventListener("click", function (e) {
+            // Supprimer les autres menus
             document.querySelectorAll(".status-options").forEach(el => el.remove());
 
             const offerId = cell.dataset.id;
@@ -35,11 +39,11 @@ document.addEventListener("DOMContentLoaded", function () {
             Object.keys(statusLabels).forEach(statusKey => {
                 const button = document.createElement("button");
                 button.textContent = statusLabels[statusKey];
-                button.classList.add("status-btn", statusColors[statusKey]);
+                button.classList.add("status-btn", statusClasses[statusKey]);
 
                 button.addEventListener("click", () => {
                     cell.textContent = statusLabels[statusKey];
-                    cell.className = `status ${statusColors[statusKey]}`;
+                    cell.className = `status ${statusClasses[statusKey]}`;
                     localStorage.setItem("status_" + offerId, statusKey);
                     optionsBox.remove();
                 });
@@ -47,13 +51,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 optionsBox.appendChild(button);
             });
 
-            cell.style.position = "relative";
             cell.appendChild(optionsBox);
             e.stopPropagation();
         });
     });
 
-    // Fermer les menus si on clique ailleurs
+    // 3. Fermer les options si clic ailleurs
     document.addEventListener("click", () => {
         document.querySelectorAll(".status-options").forEach(el => el.remove());
     });

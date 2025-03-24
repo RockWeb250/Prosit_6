@@ -38,30 +38,27 @@
                     <th>Statut</th>
                 </tr>
             </thead>
-            <tbody>
                 {% if offers is not empty %}
                 {% for offer in offers %}
-                <td class="status 
+                <tr>
+                    <td>{{ offer.id }}</td>
+                    <td>{{ offer.offer }}</td>
+                    <td class="status 
     {% if offer.status is defined and offer.status %}
         {{ offer.status|lower|replace({' ': '-'}) }}
     {% else %}
         no-status
     {% endif %}
 " data-id="{{ offer.id }}">
-                    {% if offer.status == "Accepted" %}
-                    Acceptée
-                    {% elseif offer.status == "Pending" %}
-                    En Attente
-                    {% elseif offer.status == "Rejected" %}
-                    Refusée
-                    {% else %}
-                    Pas envoyée
-                    {% endif %}
-                </td>
 
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3">Aucune offre trouvée</td>
+                </tr>
                 {% endif %}
-            </tbody>
-
+                </tbody>
         </table>
     </main>
 
