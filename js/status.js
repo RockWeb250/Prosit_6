@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             cell.className = `status ${statusClasses[savedStatus]}`;
         } else {
             cell.textContent = "Pas envoyée";
+            cell.className = "unsent";
             cell.className = "status no-status";
         }
     });
