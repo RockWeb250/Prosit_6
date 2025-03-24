@@ -653,7 +653,7 @@ form button {
 
 .status.no-status {
     background-color: #CCCCCC;
-    color: #333;
+    color: white;
 }
 
 .status-options {
@@ -661,22 +661,21 @@ form button {
     gap: 10px;
     margin-top: 5px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #fff;
     position: absolute;
     z-index: 10;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .status-btn {
-    padding: 8px 15px;
+    padding: 10px 16px;
     border: none;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 10px;
     color: white;
     font-weight: bold;
-    font-size: 14px;
-    transition: background 0.3s;
+    font-size: 1rem;
 }
 
 .status-btn.accepted {
@@ -687,33 +686,13 @@ form button {
     background-color: #FFA500;
 }
 
-.status-btn.refused {
+.status-btn.rejected {
     background-color: #D32F2F;
 }
 
 .status-btn:hover {
     opacity: 0.9;
 }
-
-.status {
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-}
-
-.status.accepted {
-    background-color: #4CAF50;
-}
-
-.status.pending {
-    background-color: #FFA500;
-}
-
-.status
-
-
 
 /* ============================= */
 /* Recherche */
