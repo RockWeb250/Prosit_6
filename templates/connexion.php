@@ -4,31 +4,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     $dsn = "mysql:host=localhost;dbname=offres_stage;charset=utf8mb4";
-    $db_user = "root"; // adapte si besoin
-    $db_pass = "";     // ton mot de passe MySQL
+    $db_user = "user"; // ou 'root' selon ta config
+    $db_pass = "password123"; // ton mot de passe
 
     try {
-        $pdo = new PDO($dsn, $db_user, $db_pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh = new PDO($dsn, $db_user, $db_pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE pseudo = ? LIMIT 1");
-        $stmt->execute([$email]); // on suppose ici que `pseudo = email`
+        $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE pseudo = ? LIMIT 1");
 
-        $user = $stmt->fetch(PDO::FETCH_OBJ);
+        try {
+            $stmt->execute([$email]);
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-        if ($user && password_verify($password, $user->motDePasse)) {
-            echo "<p style='color:green;text-align:center;'>Bienvenue, {$user->pseudo} !</p>";
-        } else {
-            echo "<p style='color:red;text-align:center;'>Identifiants incorrects.</p>";
+            if ($result !== null) {
+                if ($result->motDePasse == $password) {
+                    echo "<p style='color:green;text-align:center;'>Bienvenue, {$result->pseudo} !</p>";
+                } else {
+                    echo "<p style='color:red;text-align:center;'>Mot de passe incorrect.</p>";
+                }
+            } else {
+                echo "<p style='color:red;text-align:center;'>Utilisateur introuvable.</p>";
+            }
+        } catch (PDOException $e) {
+            echo "<p style='color:red'>Erreur lors de l'exécution : " . $e->getMessage() . "</p>";
         }
+
     } catch (PDOException $e) {
         echo "<p style='color:red'>Erreur SQL : " . $e->getMessage() . "</p>";
     }
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
@@ -87,4 +98,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </footer>
 </body>
+
 </html>
