@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="submit-btn">Connexion</button>
             <button type="reset" class="reset-btn">Effacer</button>
         </form>
+
     </main>
 
     <script src="../js/connexion.js"></script>

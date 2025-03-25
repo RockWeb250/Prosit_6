@@ -35,20 +35,20 @@ INSERT INTO offres (id, offer, status) VALUES
 -- Création de la table des utilisateurs
 CREATE TABLE IF NOT EXISTS utilisateurs (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    pseudo VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(50) NOT NULL UNIQUE,
     motDePasse VARCHAR(255) NOT NULL
 );
 
 -- Insertion de 10 utilisateurs
-INSERT INTO utilisateurs (pseudo, motDePasse) VALUES
-('alice', 'password1'),
-('bob', 'password2'),
-('carla', 'password3'),
-('david', 'password4'),
-('emma', 'password5'),
-('felix', 'password6'),
-('gina', 'password7'),
-('hugo', 'password8'),
-('iris', 'password9'),
-('julien', 'password10');
+INSERT INTO utilisateurs (email, motDePasse) VALUES
+('alice@example.com', 'password1'),
+('bob@example.com', 'password2'),
+('carla@example.com', 'password3'),
+('david@example.com', 'password4'),
+('emma@example.com', 'password5'),
+('felix@example.com', 'password6'),
+('gina@example.com', 'password7'),
+('hugo@example.com', 'password8'),
+('iris@example.com', 'password9'),
+('julien@example.com', 'password10');
 

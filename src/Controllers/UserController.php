@@ -12,36 +12,39 @@ class UserController
     {
         $this->templateEngine = $templateEngine;
     }
+
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'] ?? '';
+            $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
-
-            $user = "user";
-            $pass = "password123";
-            $host = "localhost";
-            $charset = 'utf8mb4';
+            
+            $db_user = "user";            
+            $db_pass = "password123";     
+            $dsn = "mysql:host=localhost;dbname=offres_stage;charset=utf8mb4";
 
             try {
-                $dbh = new PDO($dsn, $user, $pass);
+                $dbh = new PDO($dsn, $db_user, $db_pass);
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE pseudo = ? LIMIT 1");
-                $stmt->execute([$username]);
+                $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE email = ? LIMIT 1");
+                $stmt->execute([$email]);
                 $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-                if ($result && $result->motDePasse === $password) {
-                    echo "Bienvenue " . htmlspecialchars($result->pseudo);
+                if ($result !== null) {
+                    if ($result->motDePasse === $password) {
+                        echo "<p style='color:green;text-align:center;'>Bienvenue " . htmlspecialchars($result->email) . " !</p>";
+                    } else {
+                        echo "<p style='color:red;text-align:center;'>Mot de passe incorrect.</p>";
+                    }
                 } else {
-                    echo "Identifiants incorrects.";
+                    echo "<p style='color:red;text-align:center;'>Utilisateur non trouvé.</p>";
                 }
-
             } catch (PDOException $e) {
-                echo "Erreur : " . $e->getMessage();
+                echo "<p style='color:red;'>Erreur de connexion : " . $e->getMessage() . "</p>";
             }
         } else {
-            echo $this->templateEngine->render('login.twig'); // Formulaire HTML
+            echo $this->templateEngine->render('login.twig');
         }
     }
 }
