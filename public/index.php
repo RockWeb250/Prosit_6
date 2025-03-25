@@ -1,41 +1,56 @@
 <?php
+// index.php
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require "vendor/autoload.php";
+require_once "vendor/autoload.php";
 
 use App\Controllers\OfferController;
-use App\Controllers\UserController;
+use App\Controllers\UtilisateurController;
 
-$loader = new \Twig\Loader\FilesystemLoader('templates');
-$twig = new \Twig\Environment($loader, [
-    'debug' => true
-]);
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
+$twig = new \Twig\Environment($loader, ['debug' => true]);
 
+// URI de la route
 $uri = $_GET['uri'] ?? '/';
 
-$controller = new OfferController($twig);
-$userController = new UserController($twig);
+// Routing des contrôleurs
+$offerController = new OfferController($twig);
+$userController = new UtilisateurController($twig);
 
+// Routing des actions
 switch (trim($uri, '/')) {
     case '':
-        $controller->welcomePage();
+        $offerController->welcomePage();
         break;
+
     case 'offres':
-        $controller->offersPage();
+        $offerController->offersPage();
         break;
+
     case 'about':
-        $controller->aboutPage();
+        $offerController->aboutPage();
         break;
+
     case 'show_status':
-        $controller->showStatusPage();
+        $offerController->showStatusPage();
         break;
+
     case 'login':
         $userController->login();
         break;
+
+    case 'logout':
+        session_start();
+        session_destroy();
+        header('Location: index.php');
+        exit;
+
     default:
-        echo '404 Not Found';
+        http_response_code(404);
+        echo "<h1>404 - Page non trouvée</h1>";
         break;
 }
 ?>
