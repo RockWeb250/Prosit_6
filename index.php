@@ -36,7 +36,7 @@ switch (trim($uri, '/')) {
         $controller->aboutPage();
         break;
     case 'show_status':
-        $controller->show_Status();
+        $controller->showStatusPage();
         break;
     default:
         echo '404 Not Found';
