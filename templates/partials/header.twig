@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Lebonplan - Site d'annonces{% endblock %}</title>
-    <link rel="stylesheet" href="{{ base_url }}css/styles.css">
+    <link rel="stylesheet" href="../../public/css/styles.css">
 </head>
 
 <body>
@@ -14,15 +14,15 @@
     </div>
 
     <nav class="navbar">
-        <a href="{{ base_url }}index.php" class="active">Accueil</a>
-        <a href="{{ base_url }}index.php?uri=about">À Propos</a>
-        <a href="{{ base_url }}offre.php">Offres</a>
-        <a href="{{ base_url }}avis.twig">Avis</a>
-        <a href="{{ base_url }}contact.twig">Contact</a>
-        <a href="{{ base_url }}cookies.twig">Cookies</a>
+        <a href="../index.php" class="active">Accueil</a>
+        <a href="../index.php?uri=about">À Propos</a>
+        <a href="../offre.php">Offres</a>
+        <a href="../avis.twig">Avis</a>
+        <a href="../contact.twig">Contact</a>
+        <a href="../cookies.twig">Cookies</a>
 
         {% if session.user is defined and session.user.role == 'Admin' %}
-            <a href="{{ base_url }}index.php?uri=dashboard">Admin Panel</a>
+            <a href="../index.php?uri=dashboard">Admin Panel</a>
         {% endif %}
     </nav>
 
@@ -30,13 +30,13 @@
         {% if session.user is defined %}
             <div class="user-info">
                 Bienvenue {{ session.user.prenom ?? session.user.email }} |
-                <form action="{{ base_url }}index.php?uri=logout" method="POST" style="display:inline;">
+                <form action="../index.php?uri=logout" method="POST" style="display:inline;">
                     <button type="submit" class="logout-btn">Déconnexion</button>
                 </form>
             </div>
         {% else %}
-            <a href="{{ base_url }}connexion.php" class="btn-login">Connexion</a>
-            <a href="{{ base_url }}inscription.php" class="btn-register">Inscription</a>
+            <a href="../connexion.php" class="btn-login">Connexion</a>
+            <a href="../inscription.php" class="btn-register">Inscription</a>
         {% endif %}
     </div>
 </header>
