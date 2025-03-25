@@ -40,15 +40,15 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
 );
 
 -- Insertion de 10 utilisateurs
-INSERT INTO utilisateurs (email, motDePasse) VALUES
-('alice@example.com', 'password1'),
-('bob@example.com', 'password2'),
-('carla@example.com', 'password3'),
-('david@example.com', 'password4'),
-('emma@example.com', 'password5'),
-('felix@example.com', 'password6'),
-('gina@example.com', 'password7'),
-('hugo@example.com', 'password8'),
-('iris@example.com', 'password9'),
-('julien@example.com', 'password10');
+INSERT INTO utilisateurs (id, email, motDePasse) VALUES
+(100,'alice@example.com', 'password1'),
+(200,'bob@example.com', 'password2'),
+(300,'carla@example.com', 'password3'),
+(400,'david@example.com', 'password4'),
+(500,'emma@example.com', 'password5'),
+(600,'felix@example.com', 'password6'),
+(700,'gina@example.com', 'password7'),
+(800,'hugo@example.com', 'password8'),
+(900,'iris@example.com', 'password9'),
+(111,'julien@example.com', 'password10');
 

@@ -4,28 +4,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     $dsn = "mysql:host=localhost;dbname=offres_stage;charset=utf8mb4";
-    $db_user = "user"; // ou 'root' selon ta config
-    $db_pass = "password123"; // ton mot de passe
+    $db_user = "user";
+    $db_pass = "password123";
 
     try {
         $dbh = new PDO($dsn, $db_user, $db_pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE pseudo = ? LIMIT 1");
+        $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE email = ? LIMIT 1");
 
         try {
             $stmt->execute([$email]);
             $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if ($result !== null) {
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if ($result !== false) {
                 if ($result->motDePasse == $password) {
-                    echo "<p style='color:green;text-align:center;'>Bienvenue, {$result->pseudo} !</p>";
+                    header('Location: ../index.php');
+                    exit;
                 } else {
                     echo "<p style='color:red;text-align:center;'>Mot de passe incorrect.</p>";
                 }
             } else {
                 echo "<p style='color:red;text-align:center;'>Utilisateur introuvable.</p>";
             }
+
+
         } catch (PDOException $e) {
             echo "<p style='color:red'>Erreur lors de l'exécution : " . $e->getMessage() . "</p>";
         }
@@ -74,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" id="password" name="password" class="form-input" required>
 
             <button type="submit" class="submit-btn">Connexion</button>
-            <button type="reset" class="reset-btn">Effacer</button>
+            <button type="reset" class="reset-btn" value="Login">Effacer</button>
         </form>
 
     </main>
