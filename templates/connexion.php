@@ -1,4 +1,8 @@
 <?php
+session_start();
+
+$errorMessage = null;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
@@ -12,34 +16,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE email = ? LIMIT 1");
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-        try {
-            $stmt->execute([$email]);
-            $result = $stmt->fetch(PDO::FETCH_OBJ);
-
-            $result = $stmt->fetch(PDO::FETCH_OBJ);
-
-            if ($result !== false) {
-                if ($result->motDePasse == $password) {
-                    header('Location: ../index.php');
-                    exit;
-                } else {
-                    echo "<p style='color:red;text-align:center;'>Mot de passe incorrect.</p>";
-                }
+        if ($result !== false) {
+            if ($result->motDePasse === $password) {
+                $_SESSION['user'] = $result; // stocker tout l'objet si besoin
+                header('Location: ../index.php');
+                exit;
             } else {
-                echo "<p style='color:red;text-align:center;'>Utilisateur introuvable.</p>";
+                $errorMessage = "Mot de passe incorrect.";
             }
-
-
-        } catch (PDOException $e) {
-            echo "<p style='color:red'>Erreur lors de l'exécution : " . $e->getMessage() . "</p>";
+        } else {
+            $errorMessage = "Utilisateur introuvable.";
         }
 
     } catch (PDOException $e) {
-        echo "<p style='color:red'>Erreur SQL : " . $e->getMessage() . "</p>";
+        $errorMessage = "Erreur SQL : " . $e->getMessage();
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -71,6 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main>
         <h2 class="page-title">Formulaire de connexion</h2>
 
+        <?php if (isset($errorMessage)): ?>
+            <p style="color:red; text-align:center;"><?= htmlspecialchars($errorMessage) ?></p>
+        <?php endif; ?>
+
         <form class="form-container" method="post">
             <label for="email">Email :</label>
             <input type="email" id="email" name="email" class="form-input" required>
@@ -79,10 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" id="password" name="password" class="form-input" required>
 
             <button type="submit" class="submit-btn">Connexion</button>
-            <button type="reset" class="reset-btn" value="Login">Effacer</button>
+            <button type="reset" class="reset-btn">Effacer</button>
         </form>
-
     </main>
+
 
     <script src="../js/connexion.js"></script>
     <script src="../js/interaction.js"></script>

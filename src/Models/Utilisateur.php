@@ -10,7 +10,7 @@ class Utilisateur
 
     public function __construct()
     {
-        $dsn = "mysql:host=localhost;dbname=offres_stage;charset=utf8mb4";
+        $dsn = "mysql:host=localhost;dbname=prosit7;charset=utf8mb4";
         $user = "user";
         $pass = "password123";
 
