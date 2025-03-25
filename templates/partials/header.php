@@ -40,7 +40,7 @@ if (!defined('BASE_URL')) {
     <div class="auth-container">
         <?php if (isset($_SESSION['user'])): ?>
             <div class="user-info">
-                Bienvenue <strong><?= htmlspecialchars($_SESSION['user']['prenom']) ?></strong> |
+                Bienvenue <?= htmlspecialchars($_SESSION['user']['prenom']) ?> |
                 <form action="<?= BASE_URL ?>index.php?controller=utilisateur&action=logout" method="POST" style="display:inline;">
                     <button type="submit" class="logout-btn">Déconnexion</button>
                 </form>

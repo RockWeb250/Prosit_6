@@ -88,6 +88,43 @@
     color: orange !important;
 }
 
+/* Conteneur d'authentification */
+.auth-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Message de bienvenue */
+.user-info {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Boutons de connexion/déconnexion */
+.btn-login,
+.btn-register,
+.logout-btn {
+    background-color: #ff7b00;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.btn-login:hover,
+.btn-register:hover,
+.logout-btn:hover {
+    background-color: #e76800;
+}
+
+
 /* ============================= */
 /* Menu Burger */
 /* ============================= */

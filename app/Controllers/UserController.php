@@ -3,8 +3,7 @@ namespace App\Controllers;
 
 use App\Models\Utilisateur;
 
-class UserController
-{
+class UserController {
     private $templateEngine;
 
     public function __construct($templateEngine)
@@ -26,15 +25,13 @@ class UserController
 
             if ($user && $user->motDePasse === $password) {
                 $_SESSION['user'] = $user;
-                header('Location: ../index.php');
+                header('Location: ' . BASE_URL . 'index.php'); // Adapté avec BASE_URL
                 exit;
             } else {
                 $error = "Email ou mot de passe incorrect.";
             }
         }
 
-        echo $this->templateEngine->render('login.twig', [
-            'error' => $error
-        ]);
+        echo $this->templateEngine->render('login.twig', ['error' => $error]);
     }
 }
