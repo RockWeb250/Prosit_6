@@ -15,7 +15,7 @@ class OfferModel extends Model
     public function __construct()
     {
         // Connexion à la base SQL "offres_stage" et à la table "offres"
-        $this->db = new SqlDatabase('offers');
+        $this->db = new SqlDatabase('prosit7');
     }
 
     public function getAllOffers(): array

@@ -17,7 +17,7 @@ class SqlDatabase
 
         $user = "user";
         $pass = "password123";
-        $host = "mysql:host=localhost;dbname=prosit7";
+        $host = "localhost";
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
