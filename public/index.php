@@ -1,26 +1,33 @@
 <?php
-// index.php
+// public/index.php
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once "vendor/autoload.php";
+// Chemins importants
+define('ROOT_DIR', dirname(__DIR__));
+define('APP_DIR', ROOT_DIR . '/app');
+define('TEMPLATE_DIR', ROOT_DIR . '/templates');
+
+require_once ROOT_DIR . '/vendor/autoload.php';
+require_once APP_DIR . '/config/config.php';
 
 use App\Controllers\OfferController;
-use App\Controllers\UtilisateurController;
+use App\Controllers\UserController;
 
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
+// Initialisation de Twig
+$loader = new \Twig\Loader\FilesystemLoader(TEMPLATE_DIR);
 $twig = new \Twig\Environment($loader, ['debug' => true]);
 
-// URI de la route
+// Récupération de l'URI
 $uri = $_GET['uri'] ?? '/';
 
-// Routing des contrôleurs
+// Contrôleurs
 $offerController = new OfferController($twig);
-$userController = new UtilisateurController($twig);
+$userController = new UserController($twig);
 
-// Routing des actions
+// Routing
 switch (trim($uri, '/')) {
     case '':
         $offerController->welcomePage();
