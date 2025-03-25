@@ -1,8 +1,12 @@
 <?php
 // index.php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,15 +22,26 @@
         <nav class="navbar">
             <a href="index.php" class="active" aria-current="page">Accueil</a>
             <a href="templates/a-propos.php">À Propos</a>
-            <a href="templates/inscription.php">Inscription</a>
             <a href="templates/offre.php">Offres</a>
-            <a href="templates/connexion.php">Connexion</a>
             <a href="templates/avis.php">Avis</a>
             <a href="templates/contact.php">Contact</a>
             <a href="templates/cookies.php">Cookies</a>
+            <?php if (isset($_SESSION['user'])): ?>
+                <!-- Utilisateur connecté -->
+                <a href="templates/mon-compte.php">Mon Compte</a>
+                <form action="templates/deconnexion.php" method="POST" class="logout-form">
+                    <button type="submit" class="logout-button">Déconnexion</button>
+                </form>
+            <?php else: ?>
+                <!-- Utilisateur non connecté -->
+                <a href="templates/inscription.php">Inscription</a>
+                <a href="templates/connexion.php">Connexion</a>
+            <?php endif; ?>
         </nav>
+
+
     </header>
-    
+
     <main>
         <h2 class="page-title">Bienvenue sur Lebonplan</h2>
         <p>Votre site d'annonces en ligne pour acheter et vendre en toute simplicité.</p>
@@ -76,23 +91,25 @@
             </table>
         </div>
 
-    <script src="js/interaction.js"></script>
+        <script src="js/interaction.js"></script>
 
-    <footer>
-        <div class="footer-container">
-            <div class="footer-column">
-                <h4>Mentions Légales</h4>
-                <p>&copy; 2025 - Tous droits réservés</p>
-                <p>Hébergeur : CESI</p>
-                <p>Adresse : 80 avenue Edmund Halley Rouen Madrillet Innovation, 76800 Saint-Étienne-du-Rouvray</p>
-                <p>Tél : 02 32 81 85 60</p>
-                <p>Raison Sociale : Entreprise de services informatiques</p>
+        <footer>
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h4>Mentions Légales</h4>
+                    <p>&copy; 2025 - Tous droits réservés</p>
+                    <p>Hébergeur : CESI</p>
+                    <p>Adresse : 80 avenue Edmund Halley Rouen Madrillet Innovation, 76800 Saint-Étienne-du-Rouvray</p>
+                    <p>Tél : 02 32 81 85 60</p>
+                    <p>Raison Sociale : Entreprise de services informatiques</p>
+                </div>
+                <hr>
+                <div class="footer-column">
+                    <p><a href="templates/politique-confidentialite.php" class="footer-link">Politique de
+                            confidentialité</a></p>
+                </div>
             </div>
-            <hr>
-            <div class="footer-column">
-                <p><a href="templates/politique-confidentialite.php" class="footer-link">Politique de confidentialité</a></p>
-            </div>
-        </div>
-    </footer>
+        </footer>
 </body>
+
 </html>
