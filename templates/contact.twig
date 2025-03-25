@@ -1,0 +1,18 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<h1 class="page-title">Nous sommes à votre écoute</h1>
+
+<form class="form-container" method="post">
+    <label for="nom">Nom complet :</label>
+    <input type="text" id="nom" name="nom" class="form-input" required>
+
+    <label for="commentaires">Votre message :</label>
+    <textarea id="commentaires" name="commentaires" class="form-input" rows="4" required></textarea>
+
+    <button type="submit" class="submit-btn">Envoyer</button>
+    <button type="reset" class="reset-btn">Effacer</button>
+</form>
+
+<script src="{{ base_url }}js/interaction.js"></script>
+{% endblock %}

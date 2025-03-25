@@ -1,0 +1,53 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<h1 class="page-title">Votre avis nous intéresse</h1>
+
+<form class="form-container" method="get">
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" class="form-input" required>
+
+    <label for="prenom">Prénom :</label>
+    <input type="text" id="prenom" name="prenom" class="form-input" required>
+
+    <label for="email">Mail :</label>
+    <input type="email" id="email" name="email" class="form-input" required>
+
+    <label for="objet">Objet :</label>
+    <select id="objet" name="objet" class="form-input">
+        <option value="produit acheté">Produit Acheté</option>
+        <option value="service commercial">Service Commercial</option>
+        <option value="service technique">Service Technique</option>
+        <option value="autres">Autres</option>
+    </select>
+
+    <fieldset class="form-fieldset">
+        <legend>Catégories :</legend>
+        <div class="checkbox-container">
+            {% for cat in ['Immobilier', 'Véhicules', 'Vêtements', 'Multimédia', 'Maison', 'Loisirs', 'Services'] %}
+                <label>{{ cat }} <input type="checkbox" name="categories" value="{{ cat }}"></label>
+            {% endfor %}
+        </div>
+    </fieldset>
+
+    <label for="photo">Joindre un fichier :</label>
+    <input type="file" id="photo" name="photo" class="form-input">
+
+    <fieldset class="form-fieldset">
+        <legend>Satisfaction :</legend>
+        <div class="radio-container">
+            <label>Satisfait <input type="radio" name="satisfaction" value="Satisfait" required></label>
+            <label>Pas satisfait <input type="radio" name="satisfaction" value="Pas satisfait" required></label>
+        </div>
+    </fieldset>
+
+    <label for="commentaires">Commentaires :</label>
+    <textarea id="commentaires" name="commentaires" class="form-input" rows="4"></textarea>
+
+    <button type="submit" class="submit-btn">Envoyer</button>
+    <button type="reset" class="reset-btn">Effacer</button>
+</form>
+
+<script src="{{ base_url }}js/avis.js"></script>
+<script src="{{ base_url }}js/interaction.js"></script>
+{% endblock %}

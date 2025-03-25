@@ -1,0 +1,22 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<h2 class="page-title">Gestion des Cookies</h2>
+
+<div class="cookie-box">
+    <p><strong>Ce site utilise des cookies pour améliorer votre expérience.</strong></p>
+    <p>Acceptez-vous les cookies ?</p>
+
+    <form id="cookies-form">
+        <fieldset class="cookie-options">
+            <label>Oui <input type="radio" name="cookies" value="yes"></label>
+            <label>Non <input type="radio" name="cookies" value="no"></label>
+        </fieldset>
+        <br>
+        <button type="submit" class="submit-btn">Valider</button>
+    </form>
+</div>
+
+<script src="{{ base_url }}js/cookies.js"></script>
+<script src="{{ base_url }}js/interaction.js"></script>
+{% endblock %}
