@@ -73,3 +73,9 @@ class SqlDatabase
         return $stmt->execute([$record['id']]);
     }
 }
+
+public function getPdo(): PDO
+{
+    return $this->pdo;
+}
+?>

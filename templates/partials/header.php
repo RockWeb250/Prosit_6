@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!defined('BASE_URL')) {
-    define('BASE_URL', '/'); // ou adapte selon ton arborescence
+    define('BASE_URL', 'C:/site_localhost/Prosit_6/'); 
 }
 ?>
 <!DOCTYPE html>
