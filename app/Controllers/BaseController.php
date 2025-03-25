@@ -1,19 +1,17 @@
 <?php
-// app/controller/BaseController.php
-
 namespace App\Controller;
 
 class BaseController
 {
-    /**
-     * Méthode de rendu de la vue.
-     */
-    protected function render($view, $params = [])
+    protected \Twig\Environment $twig;
+
+    public function __construct(\Twig\Environment $twig)
     {
-        // Extraire les variables pour la vue
-        extract($params);
+        $this->twig = $twig;
+    }
 
-        require_once dirname(__DIR__) . '/templates/layout.twig';
-
+    protected function render(string $template, array $params = [])
+    {
+        echo $this->twig->render($template, $params);
     }
 }

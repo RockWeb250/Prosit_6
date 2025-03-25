@@ -15,16 +15,19 @@ class OfferController
 
     public function welcomePage()
     {
-        echo $this->templateEngine->render('home.twig', [
-            'base_url' => BASE_URL,
-            'articles' => [
-                ['intitule' => 'Canapé', 'localisation' => 'Paris', 'vendeur' => 'Julien', 'prix' => '150 €'],
-                ['intitule' => 'iPhone 13', 'localisation' => 'Lyon', 'vendeur' => 'Alice', 'prix' => '500 €'],
-                ['intitule' => 'Vélo VTT', 'localisation' => 'Marseille', 'vendeur' => 'Hugo', 'prix' => '120 €'],
-            ]
-        ]);
+        $articles = [
+            ['intitule' => 'Canapé', 'localisation' => 'Paris', 'vendeur' => 'Julien', 'prix' => '150 €'],
+            ['intitule' => 'iPhone 13', 'localisation' => 'Lyon', 'vendeur' => 'Alice', 'prix' => '500 €'],
+            ['intitule' => 'Vélo VTT', 'localisation' => 'Marseille', 'vendeur' => 'Hugo', 'prix' => '120 €'],
+        ];
 
+        $this->templateEngine->render('home.twig', [
+            'articles' => $articles,
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? [],
+        ]);
     }
+
 
     public function offersPage()
     {
