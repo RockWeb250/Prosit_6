@@ -1,62 +1,54 @@
-<?php
-// loisirs.php
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loisirs - Lebonplan</title>
-    <link rel="stylesheet" href="../css/styles.css">
-</head>
-<body>
-    <div style="text-align: center;">
-        <img src="../Images/BonPlan.png" alt="Le Bon Plan" class="logo">
+{% extends 'partials/base.twig' %}
+
+{% block content %}
+    <h2 class="page-title">
+        {% if session.user is defined %}
+            Bienvenue {{ session.user.prenom|default(session.user.email)|e }}
+        {% else %}
+            Bienvenue sur Lebonplan
+        {% endif %}
+    </h2>
+
+    <p>Votre site d'annonces en ligne pour acheter et vendre en toute simplicité.</p>
+
+    <h3>Catégories</h3>
+    <ul class="categories">
+        <li><a href="../templates/immobilier.php">Immobilier</a></li>
+        <li><a href="../templates/vehicule.php">Véhicules</a></li>
+        <li><a href="../templates/vetements.php">Vêtements</a></li>
+        <li><a href="../templates/multimedia.php">Multimédia</a></li>
+        <li><a href="../templates/maison.php">Maison</a></li>
+        <li><a href="../templates/loisirs.php">Loisirs</a></li>
+        <li><a href="../templates/services.php">Services</a></li>
+    </ul>
+
+    <h3>Derniers articles ajoutés</h3>
+    <div class="table-container">
+        <table class="articles-table">
+            <thead>
+                <tr>
+                    <th>Intitulé</th>
+                    <th>Localisation</th>
+                    <th>Vendeur</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.intitule }}</td>
+                        <td>{{ article.localisation }}</td>
+                        <td>{{ article.vendeur }}</td>
+                        <td>{{ article.prix }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucun article disponible pour le moment.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-  
-    <nav class="navbar">
-        <a href="../index.php">Accueil</a>
-        <a href="immobilier.php">Immobilier</a>
-        <a href="vehicule.php">Véhicules</a>
-        <a href="vetements.php">Vêtements</a>
-        <a href="multimedia.php">Multimédia</a>
-        <a href="maison.php">Maison</a>
-        <a href="loisirs.php" class="active" aria-current="page">Loisirs</a>
-        <a href="services.php">Services</a>
-    </nav>
 
-    <header>
-        <div class="header-bar">
-            <h1 class="categorie-title">Loisirs</h1>
-        </div>
-    </header>
-    
-    <main class="content-container">
-        <h2 class="section-title">Annonces Loisirs</h2>
-        <p>Retrouvez ici toutes les annonces disponibles dans la catégorie Loisirs.</p>
-        
-        <section class="annonces">
-            <p>Aucune annonce disponible pour le moment.</p>
-        </section>
-    </main>
-
-    <script src="../js/interaction.js"></script>
-
-    <footer>
-        <div class="footer-container">
-            <div class="footer-column">
-                <h4>Mentions Légales</h4>
-                <p>&copy; 2025 - Tous droits réservés</p>
-                <p>Hébergeur : CESI</p>
-                <p>Adresse : 80 avenue Edmund Halley Rouen Madrillet Innovation, 76800 Saint-Étienne-du-Rouvray</p>
-                <p>Tél : 02 32 81 85 60</p>
-                <p>Raison Sociale : Entreprise de services informatiques</p>
-            </div>
-            <hr>
-            <div class="footer-column">
-                <p><a href="politique-confidentialite.php" class="footer-link">Politique de confidentialité</a></p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+    <script src="../public/js/interaction.js"></script>
+{% endblock %}
