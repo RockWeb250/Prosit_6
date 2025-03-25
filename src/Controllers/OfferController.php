@@ -5,9 +5,8 @@ use App\Models\OfferModel;
 
 class OfferController extends Controller
 {
-    private OfferModel $model;
+    protected OfferModel $model;
     private $templateEngine;
-
     public function __construct($templateEngine)
     {
         $this->model = new OfferModel(); // SQL utilisé
