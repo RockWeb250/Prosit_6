@@ -37,6 +37,21 @@ class OfferController extends Controller
         echo $this->templateEngine->render('status.twig', ['offers' => $offers]);
     }
 
+    public function addOfferPage()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $offer = [
+                'offer' => $_POST['offer'],
+                'status' => $_POST['status']
+            ];
+            $this->model->addOffer($offer);
+            header('Location: /offres');
+        } else {
+            echo $this->templateEngine->render('status.twig');
+        }
+    }
+
+
     public function deleteOffer($id)
     {
         $success = $this->model->deleteOfferById($id);
