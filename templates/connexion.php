@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    $dsn = "mysql:host=localhost;dbname=offres_stage;charset=utf8mb4";
+    $dsn = "mysql:host=localhost;dbname=prosit7;charset=utf8mb4";
     $db_user = "user";
     $db_pass = "password123";
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($result !== false) {
             if ($result->motDePasse === $password) {
-                $_SESSION['user'] = $result; // stocker tout l'objet si besoin
+                $_SESSION['user'] = $result; 
                 header('Location: ../index.php');
                 exit;
             } else {
