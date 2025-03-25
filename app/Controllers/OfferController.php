@@ -39,14 +39,6 @@ class OfferController
         ]);
     }
 
-    public function aboutPage()
-    {
-        echo $this->templateEngine->render('a-propos.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? [],
-        ]);
-    }
-
     public function showStatusPage()
     {
         $offers = $this->model->getAllOffers();

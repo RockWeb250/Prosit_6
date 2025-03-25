@@ -39,12 +39,93 @@ switch (trim($uri, '/')) {
         $offerController->offersPage();
         break;
 
-    case 'about':
-        $offerController->aboutPage();
-        break;
-
     case 'show_status':
         $offerController->showStatusPage();
+        break;
+
+    case 'a-propos':
+        echo $twig->render('a-propos.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+
+    case 'contact':
+        echo $twig->render('contact.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'avis':
+        echo $twig->render('avis.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'inscription':
+        echo $twig->render('inscription.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'loisirs':
+        echo $twig->render('loisirs.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'maison':
+        echo $twig->render('maison.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'multimedia':
+        echo $twig->render('multimedia.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'politique-confidentialite':
+        echo $twig->render('politique-confidentialite.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'services':
+        echo $twig->render('services.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'vetements':
+        echo $twig->render('vetements.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'immobilier':
+        echo $twig->render('immobilier.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
+        break;
+
+    case 'vehicule':
+        echo $twig->render('vehicule.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? []
+        ]);
         break;
 
     case 'login':
