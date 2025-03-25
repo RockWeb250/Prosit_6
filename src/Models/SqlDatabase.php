@@ -14,9 +14,10 @@ class SqlDatabase
 
     public function __construct(string $dbname, string $table = 'offres')
     {
-        $host = 'localhost';
-        $user = 'root';
-        $pass = ''; // mets ton mot de passe ici si nécessaire
+
+        $user = "user";
+        $pass = "password123";
+        $host = "mysql:host=localhost;dbname=prosit7";
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
@@ -52,7 +53,7 @@ class SqlDatabase
             ':offer' => $record['offer'],
             ':status' => $record['status']
         ]);
-        return (int)$this->pdo->lastInsertId();
+        return (int) $this->pdo->lastInsertId();
     }
 
     public function updateRecord(int $id, array $record): bool

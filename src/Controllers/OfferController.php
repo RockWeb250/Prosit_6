@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use App\Models\OfferModel;
 
-class OfferController extends Controller
+class OfferController
 {
     protected OfferModel $model;
     private $templateEngine;
