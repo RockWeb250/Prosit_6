@@ -3,7 +3,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Expiration après 30 minutes d’inactivité
 define('SESSION_TIMEOUT', 30);
 
 if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
@@ -12,8 +11,9 @@ if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (
     session_start();
 }
 
-$_SESSION['last_activity'] = time(); // Reset du timer d’inactivité
+$_SESSION['last_activity'] = time();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
