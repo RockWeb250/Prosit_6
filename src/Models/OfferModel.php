@@ -1,9 +1,10 @@
 <?php
 namespace App\Models;
+
 use App\Models\SqlDatabase;
 
-
-class OfferModel extends Model {
+class OfferModel extends Model
+{
     const ACCEPTED_STATUS = "Accepted";
     const REJECTED_STATUS = "Rejected";
     const PENDING_STATUS = "Pending";
@@ -13,7 +14,8 @@ class OfferModel extends Model {
 
     public function __construct()
     {
-        $this->db = new SqlDatabase('offres_stage'); 
+        // Connexion à la base SQL "offres_stage" et à la table "offres"
+        $this->db = new SqlDatabase('offres_stage');
     }
 
     public function getAllOffers(): array

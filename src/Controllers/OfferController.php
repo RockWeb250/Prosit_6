@@ -1,7 +1,5 @@
 <?php
 namespace App\Controllers;
-use App\Models\SqlDatabase;
-
 
 use App\Models\OfferModel;
 
@@ -12,7 +10,7 @@ class OfferController extends Controller
 
     public function __construct($templateEngine)
     {
-        $this->model = new OfferModel(); // Utilise SqlDatabase
+        $this->model = new OfferModel(); // SQL utilisé
         $this->templateEngine = $templateEngine;
     }
 

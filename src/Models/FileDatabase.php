@@ -11,7 +11,8 @@ class FileDatabase implements Database
     /**
      * @var string The path to the database file.
      */
-    private $path = __DIR__ . DIRECTORY_SEPARATOR . 'offers.sql';
+    private $path = __DIR__ . DIRECTORY_SEPARATOR . 'offers.csv';
+
 
     /**
      * @var int The next available ID for a new record.
@@ -26,8 +27,7 @@ class FileDatabase implements Database
     public function __construct($dbname, $cols)
     {
 
-        $this->path = __DIR__ . DIRECTORY_SEPARATOR . $dbname . '.sql';
-
+        $this->path = __DIR__ . DIRECTORY_SEPARATOR . $dbname . '.csv';
 
         if (!file_exists($this->path)) {
             $file = fopen($this->path, 'w');
