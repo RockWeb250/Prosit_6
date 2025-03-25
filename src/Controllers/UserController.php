@@ -4,7 +4,7 @@ namespace App\Controllers;
 use PDO;
 use PDOException;
 
-class UserController 
+class UserController
 {
     private $templateEngine;
 
@@ -18,9 +18,10 @@ class UserController
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
 
-            $dsn = "mysql:host=localhost;dbname=workshop;charset=utf8mb4";
             $user = "user";
             $pass = "password123";
+            $host = "localhost";
+            $charset = 'utf8mb4';
 
             try {
                 $dbh = new PDO($dsn, $user, $pass);
