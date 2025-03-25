@@ -6,7 +6,7 @@ define('SESSION_TIMEOUT', 30);
 if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
     session_unset();
     session_destroy();
-    session_start(); // redémarrer une session propre
+    session_start(); 
 }
 $_SESSION['last_activity'] = time();
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'email' => $result->email
                 ];
                 $_SESSION['last_activity'] = time();
-                header('Location: ../index.php');
+                header('Location: ../index.php'); 
                 exit;
             } else {
                 $errorMessage = "Mot de passe incorrect.";

@@ -2,18 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-define('SESSION_TIMEOUT', 30);
-
-if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
-    session_unset();
-    session_destroy();
-    session_start();
-}
-
-$_SESSION['last_activity'] = time();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">

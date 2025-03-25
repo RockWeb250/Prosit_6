@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, type === "success" ? 4000 : 3000); // Succès reste plus longtemps
     }
 
-    // Validation du formulaire de connexion (FAUSSE CONNEXION)
+    // Validation du formulaire de connexion 
     const loginForm = document.querySelector(".form-container");
     if (loginForm) {
         loginForm.addEventListener("submit", function (event) {
