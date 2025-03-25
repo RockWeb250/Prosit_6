@@ -31,3 +31,24 @@ INSERT INTO offres (id, offer, status) VALUES
 (18, 'Stage - Ingénieur Cloud & DevOps', 'Rejected'),
 (19, 'Stage - Responsable Énergies Renouvelables', 'Accepted'),
 (20, 'Stage - Consultant Supply Chain', 'Accepted');
+
+-- Création de la table des utilisateurs
+CREATE TABLE IF NOT EXISTS utilisateurs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    pseudo VARCHAR(50) NOT NULL UNIQUE,
+    motDePasse VARCHAR(255) NOT NULL
+);
+
+-- Insertion de 10 utilisateurs
+INSERT INTO utilisateurs (pseudo, motDePasse) VALUES
+('alice', 'password1'),
+('bob', 'password2'),
+('carla', 'password3'),
+('david', 'password4'),
+('emma', 'password5'),
+('felix', 'password6'),
+('gina', 'password7'),
+('hugo', 'password8'),
+('iris', 'password9'),
+('julien', 'password10');
+
