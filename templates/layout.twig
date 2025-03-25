@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lebonplan - Site d'annonces</title>
+    <link rel="stylesheet" href="{{ base_url }}css/styles.css">
+</head>
+
+<body>
+<header>
+    <div class="text-center">
+        <img src="{{ base_url }}images/BonPlan.png" alt="Le Bon Plan" class="logo">
+    </div>
+
+    <nav class="navbar">
+        <a href="{{ base_url }}index.php" class="active">Accueil</a>
+        <a href="{{ base_url }}index.php?uri=about">À Propos</a>
+        <a href="{{ base_url }}index.php?uri=offres">Offres</a>
+        <a href="{{ base_url }}index.php?uri=avis">Avis</a>
+        <a href="{{ base_url }}index.php?uri=contact">Contact</a>
+        <a href="{{ base_url }}index.php?uri=cookies">Cookies</a>
+
+        {% if session.user is defined %}
+            {% if session.user.role is defined and session.user.role == 'Admin' %}
+                <a href="{{ base_url }}index.php?uri=dashboard">Admin Panel</a>
+            {% endif %}
+        {% endif %}
+    </nav>
+
+    <div class="auth-container">
+        {% if session.user is defined %}
+            <div class="user-info">
+                Bienvenue {{ session.user.prenom ?? session.user.email }} |
+                <form action="{{ base_url }}index.php?uri=logout" method="POST" style="display:inline;">
+                    <button type="submit" class="logout-btn">Déconnexion</button>
+                </form>
+            </div>
+        {% else %}
+            <a href="{{ base_url }}index.php?uri=login" class="btn-login">Connexion</a>
+            <a href="{{ base_url }}index.php?uri=register" class="btn-register">Inscription</a>
+        {% endif %}
+    </div>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>Mentions Légales</h4>
+            <p>&copy; {{ "now"|date("Y") }} - Tous droits réservés</p>
+            <p>Hébergeur : CESI</p>
+            <p>Adresse : 80 avenue Edmund Halley, Rouen Madrillet Innovation, 76800 Saint-Étienne-du-Rouvray</p>
+            <p>Tél : 02 32 81 85 60</p>
+            <p>Raison Sociale : Entreprise de services informatiques</p>
+        </div>
+
+        <hr>
+
+        <div class="footer-column">
+            <p>
+                <a href="{{ base_url }}index.php?uri=politique-confidentialite" class="footer-link">
+                    Politique de confidentialité
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

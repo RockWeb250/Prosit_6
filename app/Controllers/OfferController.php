@@ -15,8 +15,17 @@ class OfferController
 
     public function welcomePage()
     {
-        $offers = $this->model->getAllOffers();
-        echo $this->templateEngine->render('home.php', ['offers' => $offers]);
+        echo $this->templateEngine->render('home.twig', [
+            'session' => $_SESSION,
+            'base_url' => BASE_URL,
+            'articles' => [
+                ['intitule' => 'Canapé', 'localisation' => 'Paris', 'vendeur' => 'Julien', 'prix' => '150 €'],
+                ['intitule' => 'iPhone 13', 'localisation' => 'Lyon', 'vendeur' => 'Alice', 'prix' => '500 €'],
+                ['intitule' => 'Vélo VTT', 'localisation' => 'Marseille', 'vendeur' => 'Hugo', 'prix' => '120 €'],
+            ]
+        ]);
+
+
     }
 
     public function offersPage()
