@@ -1,14 +1,12 @@
 <?php
 session_start();
 
-// Expiration en minutes
+// Expiration automatique après 30 minutes d'inactivité
 define('SESSION_TIMEOUT', 30);
-
-// Réinitialiser l’expiration si déjà connecté
 if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
     session_unset();
     session_destroy();
-    session_start();
+    session_start(); // redémarrer une session propre
 }
 $_SESSION['last_activity'] = time();
 
@@ -26,20 +24,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dbh = new PDO($dsn, $db_user, $db_pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $dbh->prepare("SELECT id, email, motDePasse FROM utilisateurs WHERE email = ? LIMIT 1");
+        $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE email = ? LIMIT 1");
         $stmt->execute([$email]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-        if ($result && password_verify($password, $result['motDePasse'])) {
-            $_SESSION['user'] = [
-                'id' => $result['id'],
-                'email' => $result['email']
-            ];
-            $_SESSION['last_activity'] = time(); // Init de l'horloge d'activité
-            header('Location: ../index.php');
-            exit;
+        if ($result !== false) {
+            // Vérifie le mot de passe haché
+            if (password_verify($password, $result->motDePasse)) {
+                $_SESSION['user'] = [
+                    'id' => $result->id,
+                    'email' => $result->email
+                ];
+                $_SESSION['last_activity'] = time();
+                header('Location: ../index.php');
+                exit;
+            } else {
+                $errorMessage = "Mot de passe incorrect.";
+            }
         } else {
-            $errorMessage = "Identifiants incorrects.";
+            $errorMessage = "Utilisateur introuvable.";
         }
 
     } catch (PDOException $e) {
@@ -77,6 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main>
         <h2 class="page-title">Formulaire de connexion</h2>
 
+        <?php if (isset($_GET['timeout']) && $_GET['timeout'] == 1): ?>
+            <p style="color:orange; text-align:center;">
+                Votre session a expiré pour cause d'inactivité. Veuillez vous reconnecter.
+            </p>
+        <?php endif; ?>
+
         <?php if (isset($errorMessage)): ?>
             <p style="color:red; text-align:center;"><?= htmlspecialchars($errorMessage) ?></p>
         <?php endif; ?>
@@ -92,7 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="reset" class="reset-btn">Effacer</button>
         </form>
     </main>
-
 
     <script src="../js/connexion.js"></script>
     <script src="../js/interaction.js"></script>

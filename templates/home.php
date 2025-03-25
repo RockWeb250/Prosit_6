@@ -1,9 +1,20 @@
 <?php
-// index.php
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// Expiration après 30 minutes d’inactivité
+define('SESSION_TIMEOUT', 30);
+
+if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
+    session_unset();
+    session_destroy();
+    session_start();
+}
+
+$_SESSION['last_activity'] = time(); // Reset du timer d’inactivité
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -26,21 +37,17 @@ if (session_status() == PHP_SESSION_NONE) {
             <a href="templates/avis.php">Avis</a>
             <a href="templates/contact.php">Contact</a>
             <a href="templates/cookies.php">Cookies</a>
-
-            <?php if (isset($_SESSION['user'])): ?>
-                <!-- Utilisateur connecté -->
+            <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])): ?>
                 <a href="templates/mon-compte.php">Mon Compte</a>
                 <form action="templates/deconnexion.php" method="POST" class="logout-form">
                     <button type="submit" class="logout-button">Déconnexion</button>
                 </form>
             <?php else: ?>
-                <!-- Utilisateur non connecté -->
                 <a href="templates/inscription.php">Inscription</a>
                 <a href="templates/connexion.php">Connexion</a>
             <?php endif; ?>
+
         </nav>
-
-
 
     </header>
 

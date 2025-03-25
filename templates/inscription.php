@@ -4,13 +4,19 @@ session_start();
 $erreur = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $civilite = $_POST['civilite'] ?? '';
+    $nom = $_POST['nom'] ?? '';
+    $prenom = $_POST['prenom'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
+    $confirm = $_POST['confirm_password'] ?? '';
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreur = "Email invalide.";
-    } elseif (strlen($password) < 6) {
-        $erreur = "Mot de passe trop court (6 caractères minimum).";
+    } elseif ($password !== $confirm) {
+        $erreur = "Les mots de passe ne correspondent pas.";
+    } elseif (strlen($password) < 8) {
+        $erreur = "Mot de passe trop court (8 caractères minimum).";
     } else {
         $dsn = "mysql:host=localhost;dbname=prosit7;charset=utf8mb4";
         $db_user = "user";
@@ -27,16 +33,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($check->fetch()) {
                 $erreur = "Cet email est déjà utilisé.";
             } else {
-                // Hashage du mot de passe
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-                $insert = $dbh->prepare("INSERT INTO utilisateurs (email, motDePasse) VALUES (?, ?)");
-                $insert->execute([$email, $passwordHash]);
+                $insert = $dbh->prepare("INSERT INTO utilisateurs (email, motDePasse, civilite, nom, prenom) VALUES (?, ?, ?, ?, ?)");
+                $insert->execute([$email, $passwordHash, $civilite, $nom, $prenom]);
 
                 $_SESSION['user'] = [
                     'email' => $email,
                     'id' => $dbh->lastInsertId()
                 ];
+                $_SESSION['last_activity'] = time();
 
                 header('Location: ../index.php');
                 exit;
@@ -75,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <h1 class="page-title"> Créez un compte </h1>
     <div class="form-container">
-        <form action="#" method="post" onsubmit="return false;">
+        <form action="#" method="post">
             <label for="civilite">Civilité :</label>
             <select id="civilite" name="civilite">
                 <option value="madame">Madame</option>
