@@ -28,6 +28,15 @@ try {
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
 }
+
+if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
+    session_unset();
+    session_destroy();
+    header('Location: connexion.php?timeout=1');
+    exit;
+}
+
+$_SESSION['last_activity'] = time();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -98,4 +107,5 @@ try {
         </div>
     </footer>
 </body>
+
 </html>

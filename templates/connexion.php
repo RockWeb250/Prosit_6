@@ -1,6 +1,17 @@
 <?php
 session_start();
 
+// Expiration en minutes
+define('SESSION_TIMEOUT', 30);
+
+// Réinitialiser l’expiration si déjà connecté
+if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
+    session_unset();
+    session_destroy();
+    session_start();
+}
+$_SESSION['last_activity'] = time();
+
 $errorMessage = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,20 +26,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dbh = new PDO($dsn, $db_user, $db_pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE email = ? LIMIT 1");
+        $stmt = $dbh->prepare("SELECT id, email, motDePasse FROM utilisateurs WHERE email = ? LIMIT 1");
         $stmt->execute([$email]);
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result !== false) {
-            if ($result->motDePasse === $password) {
-                $_SESSION['user'] = $result; 
-                header('Location: ../index.php');
-                exit;
-            } else {
-                $errorMessage = "Mot de passe incorrect.";
-            }
+        if ($result && password_verify($password, $result['motDePasse'])) {
+            $_SESSION['user'] = [
+                'id' => $result['id'],
+                'email' => $result['email']
+            ];
+            $_SESSION['last_activity'] = time(); // Init de l'horloge d'activité
+            header('Location: ../index.php');
+            exit;
         } else {
-            $errorMessage = "Utilisateur introuvable.";
+            $errorMessage = "Identifiants incorrects.";
         }
 
     } catch (PDOException $e) {
@@ -36,8 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="fr">

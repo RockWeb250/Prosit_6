@@ -1,8 +1,56 @@
 <?php
-// inscription.php
+session_start();
+
+$erreur = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erreur = "Email invalide.";
+    } elseif (strlen($password) < 6) {
+        $erreur = "Mot de passe trop court (6 caractères minimum).";
+    } else {
+        $dsn = "mysql:host=localhost;dbname=prosit7;charset=utf8mb4";
+        $db_user = "user";
+        $db_pass = "password123";
+
+        try {
+            $dbh = new PDO($dsn, $db_user, $db_pass);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // Vérifie si l'email existe déjà
+            $check = $dbh->prepare("SELECT id FROM utilisateurs WHERE email = ?");
+            $check->execute([$email]);
+
+            if ($check->fetch()) {
+                $erreur = "Cet email est déjà utilisé.";
+            } else {
+                // Hashage du mot de passe
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+                $insert = $dbh->prepare("INSERT INTO utilisateurs (email, motDePasse) VALUES (?, ?)");
+                $insert->execute([$email, $passwordHash]);
+
+                $_SESSION['user'] = [
+                    'email' => $email,
+                    'id' => $dbh->lastInsertId()
+                ];
+
+                header('Location: ../index.php');
+                exit;
+            }
+        } catch (PDOException $e) {
+            $erreur = "Erreur : " . $e->getMessage();
+        }
+    }
+}
 ?>
+
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Inscription</title>
@@ -77,4 +125,5 @@
     </footer>
 
 </body>
+
 </html>

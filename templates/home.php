@@ -26,6 +26,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <a href="templates/avis.php">Avis</a>
             <a href="templates/contact.php">Contact</a>
             <a href="templates/cookies.php">Cookies</a>
+
             <?php if (isset($_SESSION['user'])): ?>
                 <!-- Utilisateur connecté -->
                 <a href="templates/mon-compte.php">Mon Compte</a>
@@ -38,6 +39,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <a href="templates/connexion.php">Connexion</a>
             <?php endif; ?>
         </nav>
+
 
 
     </header>
