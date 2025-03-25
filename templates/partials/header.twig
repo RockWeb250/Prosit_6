@@ -15,11 +15,11 @@
 
     <nav class="navbar">
         <a href="../index.php" class="active">Accueil</a>
-        <a href="../index.php?uri=about">À Propos</a>
-        <a href="../offre.php">Offres</a>
-        <a href="../avis.twig">Avis</a>
-        <a href="../contact.twig">Contact</a>
-        <a href="../cookies.twig">Cookies</a>
+        <a href="../index.php?uri=a-propos">À Propos</a>
+        <a href="../index.php?uri=offres">Offres</a>
+        <a href="../index.php?uri=avis">Avis</a>
+        <a href="../index.php?uri=contact">Contact</a>
+        <a href="../index.php?uri=cookies">Cookies</a>
 
         {% if session.user is defined and session.user.role == 'Admin' %}
             <a href="../index.php?uri=dashboard">Admin Panel</a>
@@ -35,8 +35,8 @@
                 </form>
             </div>
         {% else %}
-            <a href="../connexion.php" class="btn-login">Connexion</a>
-            <a href="../inscription.php" class="btn-register">Inscription</a>
+            <a href="../index.php?uri=connexion" class="btn-login">Connexion</a>
+            <a href="../index.php?uri=inscription" class="btn-register">Inscription</a>
         {% endif %}
     </div>
 </header>

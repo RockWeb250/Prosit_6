@@ -17,20 +17,42 @@ use App\Controllers\OfferController;
 use App\Controllers\UserController;
 
 // Initialisation de Twig
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
+$loader = new \Twig\Loader\FilesystemLoader(TEMPLATE_DIR);
 $twig = new \Twig\Environment($loader, ['debug' => true]);
 $twig->addGlobal('base_url', BASE_URL);
 $twig->addGlobal('session', $_SESSION ?? []);
 
-// Récupération de l'URI
-$uri = $_GET['uri'] ?? '/';
+// URI
+$uri = trim($_GET['uri'] ?? '/', '/');
 
 // Contrôleurs
 $offerController = new OfferController($twig);
 $userController = new UserController($twig);
 
-// Routing
-switch (trim($uri, '/')) {
+// Routing avec rendu Twig automatique
+$staticPages = [
+    'a-propos',
+    'avis',
+    'contact',
+    'cookies',
+    'immobilier',
+    'inscription',
+    'loisirs',
+    'maison',
+    'multimedia',
+    'politique-confidentialite',
+    'services',
+    'vehicule',
+    'vetements',
+];
+
+if (in_array($uri, $staticPages)) {
+    echo $twig->render("$uri.twig");
+    exit;
+}
+
+// Cas spéciaux (contrôleurs)
+switch ($uri) {
     case '':
         $offerController->welcomePage();
         break;
@@ -41,91 +63,6 @@ switch (trim($uri, '/')) {
 
     case 'show_status':
         $offerController->showStatusPage();
-        break;
-
-    case 'a-propos':
-        echo $twig->render('a-propos.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-
-    case 'contact':
-        echo $twig->render('contact.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'avis':
-        echo $twig->render('avis.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'inscription':
-        echo $twig->render('inscription.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'loisirs':
-        echo $twig->render('loisirs.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'maison':
-        echo $twig->render('maison.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'multimedia':
-        echo $twig->render('multimedia.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'politique-confidentialite':
-        echo $twig->render('politique-confidentialite.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'services':
-        echo $twig->render('services.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'vetements':
-        echo $twig->render('vetements.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'immobilier':
-        echo $twig->render('immobilier.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
-        break;
-
-    case 'vehicule':
-        echo $twig->render('vehicule.twig', [
-            'base_url' => BASE_URL,
-            'session' => $_SESSION ?? []
-        ]);
         break;
 
     case 'login':
@@ -143,4 +80,3 @@ switch (trim($uri, '/')) {
         echo "<h1>404 - Page non trouvée</h1>";
         break;
 }
-?>
