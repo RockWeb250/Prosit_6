@@ -1,6 +1,32 @@
 <?php
-// connexion.php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    $dsn = "mysql:host=localhost;dbname=offres_stage;charset=utf8mb4";
+    $db_user = "root"; // adapte si besoin
+    $db_pass = "";     // ton mot de passe MySQL
+
+    try {
+        $pdo = new PDO($dsn, $db_user, $db_pass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE pseudo = ? LIMIT 1");
+        $stmt->execute([$email]); // on suppose ici que `pseudo = email`
+
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($user && password_verify($password, $user->motDePasse)) {
+            echo "<p style='color:green;text-align:center;'>Bienvenue, {$user->pseudo} !</p>";
+        } else {
+            echo "<p style='color:red;text-align:center;'>Identifiants incorrects.</p>";
+        }
+    } catch (PDOException $e) {
+        echo "<p style='color:red'>Erreur SQL : " . $e->getMessage() . "</p>";
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -29,7 +55,7 @@
     <main>
         <h2 class="page-title">Formulaire de connexion</h2>
 
-        <form class="form-container" action="#" method="post" onsubmit="return false;">
+        <form class="form-container" method="post">
             <label for="email">Email :</label>
             <input type="email" id="email" name="email" class="form-input" required>
 
