@@ -64,6 +64,7 @@
 /* ============================= */
 
 .navbar {
+    display : flex;
     padding: 10px 15px;
     background-color: black;
     color: white;
@@ -89,8 +90,8 @@
 }
 
 .logout-form {
-    display: inline; 
-    margin-left: 10px;
+    display: inline-flex; 
+    margin-left: auto;
 }
 
 .logout-button {
