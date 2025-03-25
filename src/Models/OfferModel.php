@@ -1,5 +1,7 @@
 <?php
 namespace App\Models;
+use App\Models\SqlDatabase;
+
 
 class OfferModel extends Model {
     const ACCEPTED_STATUS = "Accepted";
@@ -7,63 +9,36 @@ class OfferModel extends Model {
     const PENDING_STATUS = "Pending";
     const REMOVED_STATUS = "Removed";
 
-    public function __construct($connection = null) {
-        if (is_null($connection)) {
-            $this->connection = new FileDatabase('offers', ['offer', 'status']);
-        } else {
-            $this->connection = $connection;
-        }
+    private SqlDatabase $db;
+
+    public function __construct()
+    {
+        $this->db = new SqlDatabase('offres_stage'); 
     }
 
-    public function getAllOffers() {
-        $test = $this->connection->getAllRecords();
-        return $test;
+    public function getAllOffers(): array
+    {
+        return $this->db->getAllRecords();
     }
 
-    public function getOffer($id) {
-        return $this->connection->getRecord($id);
-    }
-    
-    public function acceptedOffer() {
-        $data = [];
-        foreach ($this->getAllOffers() as $offer) {
-            if ($offer['status'] === self::ACCEPTED_STATUS) {
-                $data[] = $offer;
-            }
-        }
-        return $data;
+    public function getOfferById(int $id): ?array
+    {
+        return $this->db->getRecord($id);
     }
 
-    public function rejectedOffer() {
-        $data = [];
-        foreach ($this->getAllOffers() as $offer) {
-            if ($offer['status'] === self::REJECTED_STATUS) {
-                $data[] = $offer;
-            }
-        }
-        return $data;
+    public function addOffer(array $offer): int
+    {
+        return $this->db->insertRecord($offer);
     }
 
-    public function pendingOffer(): array {
-        $data = [];
-        foreach ($this->getAllOffers() as $offer) {
-            if ($offer['status'] === self::PENDING_STATUS) {
-                $data[] = $offer;
-            }
-        }
-        return $data;
+    public function updateOffer(int $id, array $offer): bool
+    {
+        return $this->db->updateRecord($id, $offer);
     }
 
-    public function addOffer($offer) {
-        $record = ['offer' => $offer, 'status' => self::PENDING_STATUS];
-        $this->connection->insertRecord($record);
-        return $this;
-    }
-
-    public function removeOffer($offer) {
-        $record = ['offer' => $offer, 'status' => self::REMOVED_STATUS];
-        $this->connection->deleteRecord($record);
-        return $this;
+    public function deleteOfferById(int $id): bool
+    {
+        $offer = $this->getOfferById($id);
+        return $offer ? $this->db->deleteRecord($offer) : false;
     }
 }
-?>
