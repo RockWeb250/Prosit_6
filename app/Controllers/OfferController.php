@@ -16,7 +16,6 @@ class OfferController
     public function welcomePage()
     {
         echo $this->templateEngine->render('home.twig', [
-            'session' => $_SESSION,
             'base_url' => BASE_URL,
             'articles' => [
                 ['intitule' => 'Canapé', 'localisation' => 'Paris', 'vendeur' => 'Julien', 'prix' => '150 €'],
@@ -24,7 +23,6 @@ class OfferController
                 ['intitule' => 'Vélo VTT', 'localisation' => 'Marseille', 'vendeur' => 'Hugo', 'prix' => '120 €'],
             ]
         ]);
-
 
     }
 
