@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../../config/config.php'; // S'assurer que BASE_URL est bien chargé
+require_once __DIR__ . '/../../config/config.php'; 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -11,22 +11,22 @@ require_once __DIR__ . '/../../config/config.php'; // S'assurer que BASE_URL est
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lebonplan - Site d'annonces</title>
-    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>css/styles.css">
+    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>/css/styles.css">
 </head>
 
 <body>
 <header>
     <div class="text-center">
-        <img src="<?= BASE_URL ?>images/BonPlan.png" alt="Le Bon Plan" class="logo">
+        <img src="Images/BonPlan.png" alt="Le Bon Plan" class="logo">
     </div>
 
     <nav class="navbar">
-        <a href="<?= BASE_URL ?>index.php" class="active">Accueil</a>
-        <a href="<?= BASE_URL ?>index.php?uri=about">À Propos</a>
-        <a href="<?= BASE_URL ?>index.php?uri=offres">Offres</a>
-        <a href="<?= BASE_URL ?>index.php?uri=avis">Avis</a>
-        <a href="<?= BASE_URL ?>index.php?uri=contact">Contact</a>
-        <a href="<?= BASE_URL ?>index.php?uri=cookies">Cookies</a>
+        <a href="index.php" class="active">Accueil</a>
+        <a href="index.php?uri=about">À Propos</a>
+        <a href="offre.php">Offres</a>
+        <a href="avis.php">Avis</a>
+        <a href="contact.php">Contact</a>
+        <a href="cookies.php">Cookies</a>
 
         <?php if (isset($_SESSION['user'])): ?>
             <?php if (!empty($_SESSION['user']->role) && $_SESSION['user']->role === 'Admin'): ?>
@@ -45,7 +45,7 @@ require_once __DIR__ . '/../../config/config.php'; // S'assurer que BASE_URL est
             </div>
         <?php else: ?>
             <a href="<?= BASE_URL ?>index.php?uri=login" class="btn-login">Connexion</a>
-            <a href="<?= BASE_URL ?>index.php?uri=register" class="btn-register">Inscription</a>
+            <a href="../templates/inscription.php" class="btn-register">Inscription</a>
         <?php endif; ?>
     </div>
 </header>
