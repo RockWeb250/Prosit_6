@@ -3,9 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!defined('BASE_URL')) {
-    define('BASE_URL', 'C:/site_localhost/Prosit_6/'); 
-}
+require_once __DIR__ . '/../../config/config.php'; // S'assurer que BASE_URL est bien chargé
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -19,20 +17,20 @@ if (!defined('BASE_URL')) {
 <body>
 <header>
     <div class="text-center">
-        <img src="<?= BASE_URL ?>Images/BonPlan.png" alt="Le Bon Plan" class="logo">
+        <img src="<?= BASE_URL ?>images/BonPlan.png" alt="Le Bon Plan" class="logo">
     </div>
-    
+
     <nav class="navbar">
         <a href="<?= BASE_URL ?>index.php" class="active">Accueil</a>
-        <a href="<?= BASE_URL ?>templates/a-propos.php">À Propos</a>
-        <a href="<?= BASE_URL ?>templates/offre.php">Offres</a>
-        <a href="<?= BASE_URL ?>templates/avis.php">Avis</a>
-        <a href="<?= BASE_URL ?>templates/contact.php">Contact</a>
-        <a href="<?= BASE_URL ?>templates/cookies.php">Cookies</a>
+        <a href="<?= BASE_URL ?>index.php?uri=about">À Propos</a>
+        <a href="<?= BASE_URL ?>index.php?uri=offres">Offres</a>
+        <a href="<?= BASE_URL ?>index.php?uri=avis">Avis</a>
+        <a href="<?= BASE_URL ?>index.php?uri=contact">Contact</a>
+        <a href="<?= BASE_URL ?>index.php?uri=cookies">Cookies</a>
 
         <?php if (isset($_SESSION['user'])): ?>
-            <?php if ($_SESSION['user']['role'] === 'Admin'): ?>
-                <a href="<?= BASE_URL ?>index.php?controller=dashboard&action=index">Admin Panel</a>
+            <?php if (!empty($_SESSION['user']->role) && $_SESSION['user']->role === 'Admin'): ?>
+                <a href="<?= BASE_URL ?>index.php?uri=dashboard">Admin Panel</a>
             <?php endif; ?>
         <?php endif; ?>
     </nav>
@@ -40,14 +38,14 @@ if (!defined('BASE_URL')) {
     <div class="auth-container">
         <?php if (isset($_SESSION['user'])): ?>
             <div class="user-info">
-                Bienvenue <?= htmlspecialchars($_SESSION['user']['prenom']) ?> |
-                <form action="<?= BASE_URL ?>index.php?controller=utilisateur&action=logout" method="POST" style="display:inline;">
+                Bienvenue <?= htmlspecialchars($_SESSION['user']->prenom ?? $_SESSION['user']->email) ?> |
+                <form action="<?= BASE_URL ?>index.php?uri=logout" method="POST" style="display:inline;">
                     <button type="submit" class="logout-btn">Déconnexion</button>
                 </form>
             </div>
         <?php else: ?>
-            <a href="<?= BASE_URL ?>templates/connexion.php" class="btn-login">Connexion</a>
-            <a href="<?= BASE_URL ?>templates/inscription.php" class="btn-register">Inscription</a>
+            <a href="<?= BASE_URL ?>index.php?uri=login" class="btn-login">Connexion</a>
+            <a href="<?= BASE_URL ?>index.php?uri=register" class="btn-register">Inscription</a>
         <?php endif; ?>
     </div>
 </header>

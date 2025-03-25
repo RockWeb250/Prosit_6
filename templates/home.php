@@ -58,23 +58,4 @@
 
     <script src="js/interaction.js"></script>
 
-    <footer>
-        <div class="footer-container">
-            <div class="footer-column">
-                <h4>Mentions Légales</h4>
-                <p>&copy; 2025 - Tous droits réservés</p>
-                <p>Hébergeur : CESI</p>
-                <p>Adresse : 80 avenue Edmund Halley Rouen Madrillet Innovation, 76800 Saint-Étienne-du-Rouvray</p>
-                <p>Tél : 02 32 81 85 60</p>
-                <p>Raison Sociale : Entreprise de services informatiques</p>
-            </div>
-            <hr>
-            <div class="footer-column">
-                <p><a href="templates/politique-confidentialite.php" class="footer-link">Politique de
-                        confidentialité</a></p>
-            </div>
-        </div>
-    </footer>
-    </body>
-
-    </html>
+    <?php include 'templates/partials/footer.php'; ?>
