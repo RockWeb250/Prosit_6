@@ -14,7 +14,7 @@ class BaseController
         extract($params);
 
         require_once dirname(__DIR__) . '/templates/partials/header.php';   // header commun
-        require_once dirname(__DIR__) . '/templates/' . $templates;
+        require_once dirname(__DIR__) . '/templates/' . $template;
         require_once dirname(__DIR__) . '/templates/partials/header.php';   // footer commun
 
     }
