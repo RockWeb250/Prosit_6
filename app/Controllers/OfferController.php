@@ -6,8 +6,9 @@ use App\Models\OfferModel;
 class OfferController
 {
     protected OfferModel $model;
-    private $templateEngine;
-    public function __construct($templateEngine)
+    private \Twig\Environment $templateEngine;
+
+    public function __construct(\Twig\Environment $templateEngine)
     {
         $this->model = new OfferModel(); // SQL utilisé
         $this->templateEngine = $templateEngine;
@@ -21,29 +22,39 @@ class OfferController
             ['intitule' => 'Vélo VTT', 'localisation' => 'Marseille', 'vendeur' => 'Hugo', 'prix' => '120 €'],
         ];
 
-        $this->templateEngine->render('home.twig', [
+        echo $this->templateEngine->render('home.twig', [
             'articles' => $articles,
             'base_url' => BASE_URL,
             'session' => $_SESSION ?? [],
         ]);
     }
 
-
     public function offersPage()
     {
         $offers = $this->model->getAllOffers();
-        echo $this->templateEngine->render('offre.twig', ['offers' => $offers]);
+        echo $this->templateEngine->render('offre.twig', [
+            'offers' => $offers,
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? [],
+        ]);
     }
 
     public function aboutPage()
     {
-        echo $this->templateEngine->render('a-propos.php');
+        echo $this->templateEngine->render('a-propos.twig', [
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? [],
+        ]);
     }
 
     public function showStatusPage()
     {
         $offers = $this->model->getAllOffers();
-        echo $this->templateEngine->render('status.twig', ['offers' => $offers]);
+        echo $this->templateEngine->render('status.twig', [
+            'offers' => $offers,
+            'base_url' => BASE_URL,
+            'session' => $_SESSION ?? [],
+        ]);
     }
 
     public function addOfferPage()
@@ -54,18 +65,21 @@ class OfferController
                 'status' => $_POST['status']
             ];
             $this->model->addOffer($offer);
-            header('Location: /offres');
+            header('Location: ' . BASE_URL . 'index.php?uri=offres');
+            exit;
         } else {
-            echo $this->templateEngine->render('status.twig');
+            echo $this->templateEngine->render('status.twig', [
+                'base_url' => BASE_URL,
+                'session' => $_SESSION ?? [],
+            ]);
         }
     }
-
 
     public function deleteOffer($id)
     {
         $success = $this->model->deleteOfferById($id);
         if ($success) {
-            header('Location: /offres');
+            header('Location: ' . BASE_URL . 'index.php?uri=offres');
         } else {
             echo "Erreur : offre non trouvée ou suppression échouée.";
         }

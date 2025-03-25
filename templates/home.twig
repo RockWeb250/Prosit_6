@@ -1,9 +1,11 @@
-<main>
+{% extends 'base.twig' %}
+
+{% block content %}
     <h2 class="page-title">
         {% if session.user is defined %}
-        Bienvenue {{ session.user.prenom|default(session.user.email)|e }}
+            Bienvenue {{ session.user.prenom|default(session.user.email)|e }}
         {% else %}
-        Bienvenue sur Lebonplan
+            Bienvenue sur Lebonplan
         {% endif %}
     </h2>
 
@@ -33,20 +35,20 @@
             </thead>
             <tbody>
                 {% for article in articles %}
-                <tr>
-                    <td>{{ article.intitule }}</td>
-                    <td>{{ article.localisation }}</td>
-                    <td>{{ article.vendeur }}</td>
-                    <td>{{ article.prix }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ article.intitule }}</td>
+                        <td>{{ article.localisation }}</td>
+                        <td>{{ article.vendeur }}</td>
+                        <td>{{ article.prix }}</td>
+                    </tr>
                 {% else %}
-                <tr>
-                    <td colspan="4">Aucun article disponible pour le moment.</td>
-                </tr>
+                    <tr>
+                        <td colspan="4">Aucun article disponible pour le moment.</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 
     <script src="{{ base_url }}js/interaction.js"></script>
-</main>
+{% endblock %}

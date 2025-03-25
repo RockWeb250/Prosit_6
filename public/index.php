@@ -19,6 +19,8 @@ use App\Controllers\UserController;
 // Initialisation de Twig
 $loader = new \Twig\Loader\FilesystemLoader(TEMPLATE_DIR);
 $twig = new \Twig\Environment($loader, ['debug' => true]);
+$twig->addGlobal('base_url', BASE_URL);
+$twig->addGlobal('session', $_SESSION ?? []);
 
 // Récupération de l'URI
 $uri = $_GET['uri'] ?? '/';
