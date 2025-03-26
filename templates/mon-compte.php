@@ -14,28 +14,6 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-// Connexion à la base de données
-$db_user = "user";
-$db_pass = "password123";
-$host = "localhost";
-$dbname = "prosit7";
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $db_user, $db_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Exemple : récupérer toutes les offres
-    $stmt = $pdo->query("SELECT * FROM offres");
-    $offres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
-    exit;
-}
-
 if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
     session_unset();
     session_destroy();
@@ -87,7 +65,7 @@ $_SESSION['last_activity'] = time();
                 <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">Mes candidatures</a>
             </div>
             <div class="offer-card">
-                <a href="offre.php" class="btn-status">Les Offres</a>
+                <a href="informations.php" class="btn-status">Mes Infos</a>
             </div>
         </div>
     </main>

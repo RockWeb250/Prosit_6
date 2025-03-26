@@ -1,22 +1,5 @@
 <?php
 // a-propos.php
-
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-}
-
-if (!defined('SESSION_TIMEOUT')) {
-  define('SESSION_TIMEOUT', 30);
-}
-
-// Vérification de la connexion utilisateur
-if (!isset($_SESSION['user'])) {
-  header('Location: connexion.php');
-  exit;
-
-}
-
-$_SESSION['last_activity'] = time();
 ?>
 
 <!DOCTYPE html>

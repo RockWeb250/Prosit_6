@@ -77,12 +77,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <nav class="navbar">
             <a href="../index.php">Accueil</a>
             <a href="a-propos.php">À Propos</a>
-            <a href="inscription.php">Inscription</a>
             <a href="offre.php">Offres</a>
-            <a href="connexion.php" class="active" aria-current="page">Connexion</a>
             <a href="avis.php">Avis</a>
             <a href="contact.php">Contact</a>
             <a href="cookies.php">Cookies</a>
+            <?php if (isset($_SESSION['user'])): ?>
+                <a href="mon-compte.php">Mon Compte</a>
+                <form action="deconnexion.php" method="POST" class="logout-form">
+                    <button type="submit" class="logout-button">Déconnexion</button>
+                </form>
+            <?php else: ?>
+                <a href="inscription.php">Inscription</a>
+                <a href="connexion.php" class="active" aria-current="page">Connexion</a>
+            <?php endif; ?>
         </nav>
     </header>
 
