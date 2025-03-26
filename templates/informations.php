@@ -107,5 +107,7 @@ $conn->close();
             </div>
         </div>
     </footer>
+
+    <script src="../js/interaction.js"></script>
 </body>
 </html>
