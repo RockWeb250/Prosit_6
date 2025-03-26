@@ -1,20 +1,17 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
-  }
-  
-  if (!defined('SESSION_TIMEOUT')) {
+}
+
+if (!defined('SESSION_TIMEOUT')) {
     define('SESSION_TIMEOUT', 30);
-  }
-  
-  // Vérification de la connexion utilisateur
-  if (!isset($_SESSION['user'])) {
-    header('Location: connexion.php');
+}
+
+// Redirection si l'utilisateur est déjà connecté
+if (isset($_SESSION['user'])) {
+    header('Location: ../index.php');
     exit;
-  
-  }
-  
-  $_SESSION['last_activity'] = time();
+}
 
 $erreur = null;
 
@@ -23,14 +20,13 @@ $db_pass = "password123";
 $host = "localhost";
 $db_name = "prosit7";
 $charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+$dsn = "mysql:host=$host;dbname=$db_name;charset=$charset";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $civilite = $_POST['civilite'] ?? '';
-    $nom = $_POST['nom'] ?? '';
-    $prenom = $_POST['prenom'] ?? '';
-    $email = $_POST['email'] ?? '';
+    $nom = trim($_POST['nom'] ?? '');
+    $prenom = trim($_POST['prenom'] ?? '');
+    $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm = $_POST['confirm_password'] ?? '';
 
@@ -41,28 +37,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (strlen($password) < 8) {
         $erreur = "Mot de passe trop court (8 caractères minimum).";
     } else {
-        $dsn = "mysql:host=localhost;dbname=prosit7;charset=utf8mb4";
-        $db_user = "user";
-        $db_pass = "password123";
-
         try {
             $dbh = new PDO($dsn, $db_user, $db_pass);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // Vérifie si l'email existe déjà
+            // Vérifier si email déjà utilisé
             $check = $dbh->prepare("SELECT id FROM utilisateurs WHERE email = ?");
             $check->execute([$email]);
 
             if ($check->fetch()) {
                 $erreur = "Cet email est déjà utilisé.";
             } else {
+                // Insertion utilisateur
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                $insert = $dbh->prepare("INSERT INTO utilisateurs (email, motDePasse, civilite, nom, prenom) VALUES (?, ?, ?, ?, ?)");
-                $insert->execute([$email, $passwordHash, $civilite, $nom, $prenom]);
+                $stmt = $dbh->prepare("INSERT INTO utilisateurs (email, motDePasse, civilite, nom, prenom) VALUES (?, ?, ?, ?, ?)");
+                $stmt->execute([$email, $passwordHash, $civilite, $nom, $prenom]);
+                $userId = $dbh->lastInsertId();
 
+                // Attribution du rôle par défaut ("étudiant" = role_id = 3)
+                $stmtRole = $dbh->prepare("INSERT INTO utilisateur_role (utilisateur_id, role_id) VALUES (?, ?)");
+                $stmtRole->execute([$userId, 3]);
+
+                // Authentifier immédiatement
                 $_SESSION['user'] = [
+                    'id' => $userId,
                     'email' => $email,
-                    'id' => $dbh->lastInsertId()
+                    'prenom' => $prenom,
+                    'nom' => $nom
                 ];
                 $_SESSION['last_activity'] = time();
 
@@ -70,11 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
         } catch (PDOException $e) {
-            $erreur = "Erreur : " . $e->getMessage();
+            $erreur = "Erreur SQL : " . $e->getMessage();
         }
     }
 }
 ?>
+
 
 <!doctype html>
 <html lang="fr">
@@ -102,8 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </nav>
 
     <h1 class="page-title"> Créez un compte </h1>
+    <?php if (!empty($erreur)): ?>
+    <p style="color: red; text-align: center;"><?= htmlspecialchars($erreur) ?></p>
+    <?php endif; ?>
     <div class="form-container">
-        <form action="#" method="post">
+        <form action="inscription.php" method="post">
             <label for="civilite">Civilité :</label>
             <select id="civilite" name="civilite">
                 <option value="madame">Madame</option>
