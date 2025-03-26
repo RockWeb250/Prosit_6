@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['last_activity'] = time();
 
                 // Redirection vers la page d'accueil (ou où tu veux)
-                header('Location: ../index.php');
+                header('Location: mon-compte.php');
                 exit;
             } else {
                 $errorMessage = "Mot de passe incorrect.";

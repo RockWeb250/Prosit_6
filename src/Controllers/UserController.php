@@ -25,7 +25,6 @@ class UserController
             $user = $utilisateurModel->findByEmail($email);
 
             if ($user && password_verify($password, $user->motDePasse)) {
-                // ✅ L'objet $user contient maintenant le rôle (grâce à la jointure SQL)
                 $_SESSION['user'] = $user;
                 header('Location: ../index.php');
                 exit;

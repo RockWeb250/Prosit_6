@@ -23,16 +23,35 @@ if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (
     session_destroy();
     header('Location: connexion.php?timeout=1');
     exit;
-};
+}
 
 $_SESSION['last_activity'] = time();
 
-$role = ucfirst(strtolower(trim($_SESSION['user']->role ?? 'etudiant')));
+// 🔧 Normalisation complète du rôle
+$rawRole = $_SESSION['user']->role ?? 'etudiant';
+$normalized = strtolower(trim($rawRole));
+
+switch ($normalized) {
+    case 'admin':
+        $role = 'Administrateur';
+        break;
+    case 'pilote':
+        $role = 'Pilote';
+        break;
+    case 'étudiant':
+    case 'etudiant':
+        $role = 'Etudiant';
+        break;
+    default:
+        $role = 'Inconnu';
+        break;
+}
 
 $pm = new PermissionManager();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,32 +88,33 @@ $pm = new PermissionManager();
 
         <div class="offers-container">
 
+            <!-- Infos : accessible à tous -->
             <div class="offer-card">
                 <a href="informations.php" class="btn-status">Mes Infos</a>
             </div>
 
-            <!-- Candidatures : étudiants uniquement -->
-            <?php if ($pm->hasAccess($role, 'SFx22') && $role === 'Etudiant'): ?>
+            <!-- Candidatures : si droit SFx24 (postuler à une offre) -->
+            <?php if ($pm->hasAccess($role, 'SFx24')): ?>
                 <div class="offer-card">
-                    <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">Mes candidatures</a>
+                    <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">Candidatures</a>
                 </div>
             <?php endif; ?>
 
-            <!-- Accès aux étudiants -->
-            <?php if ($pm->hasAccess($role, 'SFx3')): ?>
+            <!-- Gérer les étudiants : si droit SFx17 (Rechercher un compte étudiant) -->
+            <?php if ($pm->hasAccess($role, 'SFx17')): ?>
                 <div class="offer-card">
-                    <a href="gestion_etudiants.php" class="btn-status">Étudiants</a>
+                    <a href="gestion_etudiants.php" class="btn-status">Gérer les étudiants</a>
                 </div>
             <?php endif; ?>
 
-            <!-- Accès aux offres -->
-            <?php if ($pm->hasAccess($role, 'SFx8')): ?>
+            <!-- Gérer les offres : si droit SFx9 (Créer une offre) -->
+            <?php if ($pm->hasAccess($role, 'SFx9')): ?>
                 <div class="offer-card">
-                    <a href="gestion_offres.php" class="btn-status">Offres</a>
+                    <a href="gestion_offres.php" class="btn-status">Gérer les offres</a>
                 </div>
             <?php endif; ?>
 
-            <!-- Gérer les pilotes : uniquement Admin -->
+            <!-- Gérer les pilotes : si droit SFx13 (Rechercher un compte pilote) -->
             <?php if ($pm->hasAccess($role, 'SFx13')): ?>
                 <div class="offer-card">
                     <a href="gestion_pilotes.php" class="btn-status">Gérer les pilotes</a>
@@ -119,5 +139,7 @@ $pm = new PermissionManager();
             </div>
         </div>
     </footer>
+    <script src="../js/interaction.js"></script>
 </body>
+
 </html>

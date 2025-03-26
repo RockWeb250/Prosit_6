@@ -34,13 +34,14 @@ class Utilisateur
         $stmt = $this->pdo->prepare("
             SELECT u.*, r.nom AS role
             FROM utilisateurs u
-            LEFT JOIN roles r ON u.role_id = r.id
+            JOIN roles r ON u.role_id = r.id
             WHERE u.email = ?
         ");
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
         return $result ?: null;
     }
+
 
 
 
@@ -61,10 +62,12 @@ class Utilisateur
     public function findAll(int $limit, int $offset): array
     {
         $stmt = $this->pdo->prepare("
-            SELECT id, email, motDePasse, civilite, nom, prenom, role
-            FROM utilisateurs
-            ORDER BY id DESC
-            LIMIT :limit OFFSET :offset
+SELECT u.id, u.email, u.motDePasse, u.civilite, u.nom, u.prenom, r.nom AS role
+FROM utilisateurs u
+JOIN roles r ON u.role_id = r.id
+ORDER BY u.id DESC
+LIMIT :limit OFFSET :offset
+
         ");
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
@@ -77,18 +80,17 @@ class Utilisateur
      */
     public function createUser(array $data): bool
     {
-        // $data = ['email' => ..., 'motDePasse' => ..., 'civilite' => ..., 'nom' => ..., 'prenom' => ..., 'role' => ...]
         $stmt = $this->pdo->prepare("
-            INSERT INTO utilisateurs (email, motDePasse, civilite, nom, prenom, role)
-            VALUES (:email, :motDePasse, :civilite, :nom, :prenom, :role)
+            INSERT INTO utilisateurs (email, motDePasse, civilite, nom, prenom, role_id)
+            VALUES (:email, :motDePasse, :civilite, :nom, :prenom, :role_id)
         ");
         return $stmt->execute([
             ':email' => $data['email'],
-            ':motDePasse' => $data['motDePasse'],   // déjà haché, si possible
+            ':motDePasse' => $data['motDePasse'],   // déjà haché
             ':civilite' => $data['civilite'] ?? null,
             ':nom' => $data['nom'] ?? null,
             ':prenom' => $data['prenom'] ?? null,
-            ':role' => $data['role'] ?? 'User'
+            ':role_id' => $data['role_id'] ?? 3   // par défaut étudiant (id 3)
         ]);
     }
 
