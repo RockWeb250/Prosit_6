@@ -4,6 +4,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+if (!defined('SESSION_TIMEOUT')) {
+    define('SESSION_TIMEOUT', 30);
+}
+
 // Vérification de la connexion utilisateur
 if (!isset($_SESSION['user'])) {
     header('Location: connexion.php');
@@ -14,13 +18,13 @@ if (!isset($_SESSION['user'])) {
 $db_user = "user";
 $db_pass = "password123";
 $host = "localhost";
-$db_name = "prosit7";
+$dbname = "prosit7";
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $db_user, $db_pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Exemple : récupérer toutes les offres
@@ -57,14 +61,14 @@ $_SESSION['last_activity'] = time();
             <img src="../Images/BonPlan.png" alt="Le Bon Plan" class="logo">
         </div>
         <nav class="navbar">
-            <a href="../index.php" class="active" aria-current="page">Accueil</a>
+            <a href="../index.php">Accueil</a>
             <a href="a-propos.php">À Propos</a>
             <a href="offre.php">Offres</a>
             <a href="avis.php">Avis</a>
             <a href="contact.php">Contact</a>
             <a href="cookies.php">Cookies</a>
             <?php if (isset($_SESSION['user'])): ?>
-                <a href="mon-compte.php">Mon Compte</a>
+                <a href="mon-compte.php" class="active" aria-current="page">Mon Compte</a>
                 <form action="deconnexion.php" method="POST" class="logout-form">
                     <button type="submit" class="logout-button">Déconnexion</button>
                 </form>
@@ -84,9 +88,6 @@ $_SESSION['last_activity'] = time();
             </div>
             <div class="offer-card">
                 <a href="offre.php" class="btn-status">Les Offres</a>
-            </div>
-            <div class="offer-card">
-                <a href="../index.php" class="btn-status">Accueil</a>
             </div>
         </div>
     </main>
