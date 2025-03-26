@@ -10,9 +10,13 @@ class Utilisateur
 
     public function __construct()
     {
-        $dsn = "mysql:host=localhost;dbname=prosit7;charset=utf8mb4";
-        $user = "user";
-        $pass = "password123";
+        $db_user = "user";
+        $db_pass = "password123";
+        $host = "localhost";
+        $db_name = "prosit7";
+        $charset = 'utf8mb4';
+
+        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
         try {
             $this->pdo = new PDO($dsn, $user, $pass);
@@ -71,12 +75,12 @@ class Utilisateur
             VALUES (:email, :motDePasse, :civilite, :nom, :prenom, :role)
         ");
         return $stmt->execute([
-            ':email'     => $data['email'],
-            ':motDePasse'=> $data['motDePasse'],   // déjà haché, si possible
-            ':civilite'  => $data['civilite'] ?? null,
-            ':nom'       => $data['nom'] ?? null,
-            ':prenom'    => $data['prenom'] ?? null,
-            ':role'      => $data['role'] ?? 'User'
+            ':email' => $data['email'],
+            ':motDePasse' => $data['motDePasse'],   // déjà haché, si possible
+            ':civilite' => $data['civilite'] ?? null,
+            ':nom' => $data['nom'] ?? null,
+            ':prenom' => $data['prenom'] ?? null,
+            ':role' => $data['role'] ?? 'User'
         ]);
     }
 

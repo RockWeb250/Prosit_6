@@ -26,17 +26,16 @@ if (session_status() === PHP_SESSION_NONE) {
             <a href="templates/avis.php">Avis</a>
             <a href="templates/contact.php">Contact</a>
             <a href="templates/cookies.php">Cookies</a>
-            <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])): ?>
+            <?php if (isset($_SESSION['user']) && empty($_SESSION['user'])): ?>
                 <a href="templates/mon-compte.php">Mon Compte</a>
-                <form action="templates/deconnexion.php" method="POST" class="logout-form">
-                    <button type="submit" class="logout-button">Déconnexion</button>
-                </form>
             <?php else: ?>
                 <a href="templates/inscription.php">Inscription</a>
                 <a href="templates/connexion.php">Connexion</a>
-            <?php endif; ?>
-
-        </nav>
+                <form action="templates/deconnexion.php" method="POST" class="logout-form">
+                    <button type="submit" class="logout-button">Déconnexion</button>
+                </form>
+            </nav>
+        <?php endif; ?>
 
     </header>
 
@@ -44,6 +43,8 @@ if (session_status() === PHP_SESSION_NONE) {
         <h2 class="page-title">Bienvenue sur Lebonplan</h2>
         <p>Votre site d'annonces en ligne pour acheter et vendre en toute simplicité.</p>
 
+
+        <?php if (isset($_SESSION['user']) && empty($_SESSION['user'])): ?>
         <h3>Catégories</h3>
         <ul class="categories">
             <li><a href="templates/immobilier.php">Immobilier</a></li>
@@ -54,6 +55,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <li><a href="templates/loisirs.php">Loisirs</a></li>
             <li><a href="templates/services.php">Services</a></li>
         </ul>
+        <?php endif; ?>
 
         <h3>Derniers articles ajoutés</h3>
         <div class="table-container">

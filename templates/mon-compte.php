@@ -11,10 +11,13 @@ if (!isset($_SESSION['user'])) {
 }
 
 // Connexion à la base de données
-$host = 'localhost';
-$dbname = 'offres_stage';
-$user = 'root';
-$password = ''; // adapte si besoin
+$db_user = "user";
+$db_pass = "password123";
+$host = "localhost";
+$db_name = "prosit7";
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);

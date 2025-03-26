@@ -233,9 +233,12 @@ $offersPage = array_slice($offers, $start, $perPage);
             <button type="reset" class="reset-btn">Effacer</button>
         </form>
 
+
+        <?php if (isset($_SESSION['user']) && empty($_SESSION['user'])): ?>
         <div class="status-button-container">
             <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">⭢ Voir mes candidatures</a>
         </div>
+        <?php endif; ?>
 
         <h3 class="categorie-title">Liste des offres disponibles</h3>
         <div class="offers-container">

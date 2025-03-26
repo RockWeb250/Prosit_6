@@ -1,4 +1,11 @@
 <?php
+
+$db_user = "user";
+$db_pass = "password123";
+$host = "localhost";
+$db_name = "prosit7";
+$charset = 'utf8mb4';
+
 session_start();
 
 // Expiration automatique après 30 minutes d'inactivité
@@ -6,7 +13,7 @@ define('SESSION_TIMEOUT', 30);
 if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
     session_unset();
     session_destroy();
-    session_start(); 
+    session_start();
 }
 $_SESSION['last_activity'] = time();
 
@@ -16,27 +23,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    $dsn = "mysql:host=localhost;dbname=prosit7;charset=utf8mb4";
-    $db_user = "user";
-    $db_pass = "password123";
-
+    $dsn = "mysql:host=$host;dbname=$db_name;charset=$charset";
+    
     try {
         $dbh = new PDO($dsn, $db_user, $db_pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $dbh->prepare("SELECT * FROM utilisateurs WHERE email = ? LIMIT 1");
+        // Récupération de l'utilisateur par email
+        $stmt = $dbh->prepare("SELECT id, email, motDePasse FROM utilisateurs WHERE email = ? LIMIT 1");
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
 
         if ($result !== false) {
-            // Vérifie le mot de passe haché
+            // Compare le $password (en clair) avec le hash en base
             if (password_verify($password, $result->motDePasse)) {
+                // Mot de passe OK, on connecte l'utilisateur
                 $_SESSION['user'] = [
                     'id' => $result->id,
                     'email' => $result->email
                 ];
                 $_SESSION['last_activity'] = time();
-                header('Location: ../index.php'); 
+
+                // Redirection vers la page d'accueil (ou où tu veux)
+                header('Location: ../index.php');
                 exit;
             } else {
                 $errorMessage = "Mot de passe incorrect.";

@@ -3,6 +3,14 @@ session_start();
 
 $erreur = null;
 
+$db_user = "user";
+$db_pass = "password123";
+$host = "localhost";
+$db_name = "prosit7";
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $civilite = $_POST['civilite'] ?? '';
     $nom = $_POST['nom'] ?? '';
