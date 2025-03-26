@@ -1,6 +1,23 @@
 <?php
 // offre.php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  
+  if (!defined('SESSION_TIMEOUT')) {
+    define('SESSION_TIMEOUT', 30);
+  }
+  
+  // Vérification de la connexion utilisateur
+  if (!isset($_SESSION['user'])) {
+    header('Location: connexion.php');
+    exit;
+  
+  }
+  
+  $_SESSION['last_activity'] = time();
+
 $offers = [
     [
         "id" => 1,
@@ -214,12 +231,19 @@ $offersPage = array_slice($offers, $start, $perPage);
         <nav class="navbar">
             <a href="../index.php">Accueil</a>
             <a href="a-propos.php">À Propos</a>
-            <a href="inscription.php">Inscription</a>
             <a href="offre.php" class="active" aria-current="page">Offres</a>
-            <a href="connexion.php">Connexion</a>
             <a href="avis.php">Avis</a>
             <a href="contact.php">Contact</a>
             <a href="cookies.php">Cookies</a>
+            <?php if (isset($_SESSION['user'])): ?>
+                <a href="mon-compte.php">Mon Compte</a>
+                <form action="deconnexion.php" method="POST" class="logout-form">
+                    <button type="submit" class="logout-button">Déconnexion</button>
+                </form>
+            <?php else: ?>
+                <a href="inscription.php">Inscription</a>
+                <a href="connexion.php">Connexion</a>
+            <?php endif; ?>
         </nav>
     </header>
 
@@ -233,9 +257,12 @@ $offersPage = array_slice($offers, $start, $perPage);
             <button type="reset" class="reset-btn">Effacer</button>
         </form>
 
+
+        <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])): ?>
         <div class="status-button-container">
             <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">⭢ Voir mes candidatures</a>
         </div>
+        <?php endif; ?>
 
         <h3 class="categorie-title">Liste des offres disponibles</h3>
         <div class="offers-container">

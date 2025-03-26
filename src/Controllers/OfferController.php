@@ -2,20 +2,19 @@
 namespace App\Controllers;
 
 use App\Models\OfferModel;
-use App\Models\TaskModel;
 
-class OfferController extends Controller
+class OfferController
 {
-
+    protected OfferModel $model;
+    private $templateEngine;
     public function __construct($templateEngine)
     {
-        $this->model = new OfferModel();
+        $this->model = new OfferModel(); // SQL utilisé
         $this->templateEngine = $templateEngine;
     }
 
     public function welcomePage()
     {
-        // Retrieve the list of tasks from the model
         $offers = $this->model->getAllOffers();
         echo $this->templateEngine->render('home.php', ['offers' => $offers]);
     }
@@ -31,11 +30,34 @@ class OfferController extends Controller
         echo $this->templateEngine->render('a-propos.php');
     }
 
-    public function show_Status()
+    public function showStatusPage()
     {
         $offers = $this->model->getAllOffers();
         echo $this->templateEngine->render('status.twig', ['offers' => $offers]);
     }
 
+    public function addOfferPage()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $offer = [
+                'offer' => $_POST['offer'],
+                'status' => $_POST['status']
+            ];
+            $this->model->addOffer($offer);
+            header('Location: /offres');
+        } else {
+            echo $this->templateEngine->render('status.twig');
+        }
+    }
+
+
+    public function deleteOffer($id)
+    {
+        $success = $this->model->deleteOfferById($id);
+        if ($success) {
+            header('Location: /offres');
+        } else {
+            echo "Erreur : offre non trouvée ou suppression échouée.";
+        }
+    }
 }
-?>

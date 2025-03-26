@@ -1,8 +1,84 @@
 <?php
-// inscription.php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  
+  if (!defined('SESSION_TIMEOUT')) {
+    define('SESSION_TIMEOUT', 30);
+  }
+  
+  // Vérification de la connexion utilisateur
+  if (!isset($_SESSION['user'])) {
+    header('Location: connexion.php');
+    exit;
+  
+  }
+  
+  $_SESSION['last_activity'] = time();
+
+$erreur = null;
+
+$db_user = "user";
+$db_pass = "password123";
+$host = "localhost";
+$db_name = "prosit7";
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $civilite = $_POST['civilite'] ?? '';
+    $nom = $_POST['nom'] ?? '';
+    $prenom = $_POST['prenom'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $confirm = $_POST['confirm_password'] ?? '';
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erreur = "Email invalide.";
+    } elseif ($password !== $confirm) {
+        $erreur = "Les mots de passe ne correspondent pas.";
+    } elseif (strlen($password) < 8) {
+        $erreur = "Mot de passe trop court (8 caractères minimum).";
+    } else {
+        $dsn = "mysql:host=localhost;dbname=prosit7;charset=utf8mb4";
+        $db_user = "user";
+        $db_pass = "password123";
+
+        try {
+            $dbh = new PDO($dsn, $db_user, $db_pass);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // Vérifie si l'email existe déjà
+            $check = $dbh->prepare("SELECT id FROM utilisateurs WHERE email = ?");
+            $check->execute([$email]);
+
+            if ($check->fetch()) {
+                $erreur = "Cet email est déjà utilisé.";
+            } else {
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                $insert = $dbh->prepare("INSERT INTO utilisateurs (email, motDePasse, civilite, nom, prenom) VALUES (?, ?, ?, ?, ?)");
+                $insert->execute([$email, $passwordHash, $civilite, $nom, $prenom]);
+
+                $_SESSION['user'] = [
+                    'email' => $email,
+                    'id' => $dbh->lastInsertId()
+                ];
+                $_SESSION['last_activity'] = time();
+
+                header('Location: ../index.php');
+                exit;
+            }
+        } catch (PDOException $e) {
+            $erreur = "Erreur : " . $e->getMessage();
+        }
+    }
+}
 ?>
+
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Inscription</title>
@@ -15,19 +91,19 @@
     </div>
 
     <nav class="navbar">
-        <a href="../index.php">Accueil</a>
-        <a href="a-propos.php">À Propos</a>
-        <a href="inscription.php" class="active" aria-current="page">Inscription</a>
-        <a href="offre.php">Offres</a>
-        <a href="connexion.php">Connexion</a>
-        <a href="avis.php">Avis</a>
-        <a href="contact.php">Contact</a>
-        <a href="cookies.php">Cookies</a>
-    </nav>
+            <a href="../index.php">Accueil</a>
+            <a href="a-propos.php">À Propos</a>
+            <a href="offre.php">Offres</a>
+            <a href="avis.php">Avis</a>
+            <a href="contact.php">Contact</a>
+            <a href="cookies.php">Cookies</a>
+            <a href="inscription.php"  class="active" aria-current="page">Inscription</a>
+            <a href="connexion.php">Connexion</a>
+        </nav>
 
     <h1 class="page-title"> Créez un compte </h1>
     <div class="form-container">
-        <form action="#" method="post" onsubmit="return false;">
+        <form action="#" method="post">
             <label for="civilite">Civilité :</label>
             <select id="civilite" name="civilite">
                 <option value="madame">Madame</option>
@@ -77,4 +153,5 @@
     </footer>
 
 </body>
+
 </html>

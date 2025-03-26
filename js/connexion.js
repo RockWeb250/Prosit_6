@@ -18,13 +18,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }, type === "success" ? 4000 : 3000); // Succès reste plus longtemps
     }
 
-    // Validation du formulaire de connexion (FAUSSE CONNEXION)
+    // Validation du formulaire de connexion 
     const loginForm = document.querySelector(".form-container");
     if (loginForm) {
         loginForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Empêche l'envoi du formulaire
-
             let valid = true;
+
+            if (!valid) {
+                event.preventDefault(); 
+            }
 
             // Vérification du champ email
             const emailInput = document.getElementById("email");
@@ -47,11 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // Si tout est bon, affiche la notif et réinitialise le formulaire
             if (valid) {
                 showNotification("Connexion réussie !", "success", loginForm);
-
-                // Réinitialisation après 1 seconde
-                setTimeout(() => {
-                    loginForm.reset();
-                }, 1000);
             }
         });
     }

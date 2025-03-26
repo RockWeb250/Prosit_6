@@ -1,5 +1,22 @@
 <?php
 // politique-confidentialite.php
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  
+  if (!defined('SESSION_TIMEOUT')) {
+    define('SESSION_TIMEOUT', 30);
+  }
+  
+  // Vérification de la connexion utilisateur
+  if (!isset($_SESSION['user'])) {
+    header('Location: connexion.php');
+    exit;
+  
+  }
+  
+  $_SESSION['last_activity'] = time();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -16,15 +33,22 @@
     </div>
 
     <nav class="navbar">
-        <a href="../index.php">Accueil</a>
-        <a href="a-propos.php">À Propos</a>
-        <a href="inscription.php">Inscription</a>
-        <a href="connexion.php">Connexion</a>
-        <a href="offre.php">Offres</a>
-        <a href="avis.php">Avis</a>
-        <a href="contact.php">Contact</a>
-        <a href="cookies.php">Cookies</a>
-    </nav>
+            <a href="../index.php">Accueil</a>
+            <a href="a-propos.php">À Propos</a>
+            <a href="offre.php">Offres</a>
+            <a href="avis.php">Avis</a>
+            <a href="contact.php">Contact</a>
+            <a href="cookies.php">Cookies</a>
+            <?php if (isset($_SESSION['user'])): ?>
+                <a href="mon-compte.php">Mon Compte</a>
+                <form action="deconnexion.php" method="POST" class="logout-form">
+                    <button type="submit" class="logout-button">Déconnexion</button>
+                </form>
+            <?php else: ?>
+                <a href="inscription.php">Inscription</a>
+                <a href="connexion.php">Connexion</a>
+            <?php endif; ?>
+        </nav>
 
     <header>
         <div class="header-bar">

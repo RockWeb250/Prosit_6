@@ -1,29 +1,57 @@
 <?php
-// contact.php
-
+// mon-compte.php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
-  }
-  
-  if (!defined('SESSION_TIMEOUT')) {
+}
+
+if (!defined('SESSION_TIMEOUT')) {
     define('SESSION_TIMEOUT', 30);
-  }
-  
-  // Vérification de la connexion utilisateur
-  if (!isset($_SESSION['user'])) {
+}
+
+// Vérification de la connexion utilisateur
+if (!isset($_SESSION['user'])) {
     header('Location: connexion.php');
     exit;
-  
-  }
-  
-  $_SESSION['last_activity'] = time();
-?>
+}
 
+// Connexion à la base de données
+$db_user = "user";
+$db_pass = "password123";
+$host = "localhost";
+$dbname = "prosit7";
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $db_user, $db_pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Exemple : récupérer toutes les offres
+    $stmt = $pdo->query("SELECT * FROM offres");
+    $offres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Erreur de connexion : " . $e->getMessage();
+    exit;
+}
+
+if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
+    session_unset();
+    session_destroy();
+    header('Location: connexion.php?timeout=1');
+    exit;
+}
+
+$_SESSION['last_activity'] = time();
+?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
-    <title>Contact</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte - Lebonplan</title>
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 
@@ -37,10 +65,10 @@ if (session_status() == PHP_SESSION_NONE) {
             <a href="a-propos.php">À Propos</a>
             <a href="offre.php">Offres</a>
             <a href="avis.php">Avis</a>
-            <a href="contact.php"  class="active" aria-current="page">Contact</a>
+            <a href="contact.php">Contact</a>
             <a href="cookies.php">Cookies</a>
             <?php if (isset($_SESSION['user'])): ?>
-                <a href="mon-compte.php">Mon Compte</a>
+                <a href="mon-compte.php" class="active" aria-current="page">Mon Compte</a>
                 <form action="deconnexion.php" method="POST" class="logout-form">
                     <button type="submit" class="logout-button">Déconnexion</button>
                 </form>
@@ -52,18 +80,16 @@ if (session_status() == PHP_SESSION_NONE) {
     </header>
 
     <main>
-        <h1 class="page-title">Nous sommes à votre écoute</h1>
+        <h2 class="page-title">Bienvenue sur votre espace personnel</h2>
 
-        <form class="form-container" action="#" method="post">
-            <label for="nom">Nom complet :</label>
-            <input type="text" id="nom" name="nom" class="form-input" required>
-
-            <label for="commentaires">Votre message :</label>
-            <textarea id="commentaires" name="commentaires" class="form-input" rows="4" required></textarea>
-
-            <button type="submit" class="submit-btn">Envoyer</button>
-            <button type="reset" class="reset-btn">Effacer</button>
-        </form>
+        <div class="offers-container">
+            <div class="offer-card">
+                <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">Mes candidatures</a>
+            </div>
+            <div class="offer-card">
+                <a href="offre.php" class="btn-status">Les Offres</a>
+            </div>
+        </div>
     </main>
 
     <script src="../js/interaction.js"></script>
@@ -85,4 +111,5 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
     </footer>
 </body>
+
 </html>

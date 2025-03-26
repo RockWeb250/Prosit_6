@@ -1,8 +1,68 @@
 <?php
-// connexion.php
+
+$db_user = "user";
+$db_pass = "password123";
+$host = "localhost";
+$db_name = "prosit7";
+$charset = 'utf8mb4';
+
+session_start();
+
+// Expiration automatique après 30 minutes d'inactivité
+define('SESSION_TIMEOUT', 30);
+if (isset($_SESSION['last_activity']) && time() - $_SESSION['last_activity'] > (SESSION_TIMEOUT * 60)) {
+    session_unset();
+    session_destroy();
+    session_start();
+}
+$_SESSION['last_activity'] = time();
+
+$errorMessage = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    $dsn = "mysql:host=$host;dbname=$db_name;charset=$charset";
+    
+    try {
+        $dbh = new PDO($dsn, $db_user, $db_pass);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Récupération de l'utilisateur par email
+        $stmt = $dbh->prepare("SELECT id, email, motDePasse FROM utilisateurs WHERE email = ? LIMIT 1");
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($result !== false) {
+            // Compare le $password (en clair) avec le hash en base
+            if (password_verify($password, $result->motDePasse)) {
+                // Mot de passe OK, on connecte l'utilisateur
+                $_SESSION['user'] = [
+                    'id' => $result->id,
+                    'email' => $result->email
+                ];
+                $_SESSION['last_activity'] = time();
+
+                // Redirection vers la page d'accueil (ou où tu veux)
+                header('Location: ../index.php');
+                exit;
+            } else {
+                $errorMessage = "Mot de passe incorrect.";
+            }
+        } else {
+            $errorMessage = "Utilisateur introuvable.";
+        }
+
+    } catch (PDOException $e) {
+        $errorMessage = "Erreur SQL : " . $e->getMessage();
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
@@ -29,7 +89,17 @@
     <main>
         <h2 class="page-title">Formulaire de connexion</h2>
 
-        <form class="form-container" action="#" method="post" onsubmit="return false;">
+        <?php if (isset($_GET['timeout']) && $_GET['timeout'] == 1): ?>
+            <p style="color:orange; text-align:center;">
+                Votre session a expiré pour cause d'inactivité. Veuillez vous reconnecter.
+            </p>
+        <?php endif; ?>
+
+        <?php if (isset($errorMessage)): ?>
+            <p style="color:red; text-align:center;"><?= htmlspecialchars($errorMessage) ?></p>
+        <?php endif; ?>
+
+        <form class="form-container" method="post">
             <label for="email">Email :</label>
             <input type="email" id="email" name="email" class="form-input" required>
 
@@ -61,4 +131,5 @@
         </div>
     </footer>
 </body>
+
 </html>

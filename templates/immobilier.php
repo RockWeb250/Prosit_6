@@ -1,5 +1,22 @@
 <?php
 // immobilier.php
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  
+  if (!defined('SESSION_TIMEOUT')) {
+    define('SESSION_TIMEOUT', 30);
+  }
+  
+  // Vérification de la connexion utilisateur
+  if (!isset($_SESSION['user'])) {
+    header('Location: connexion.php');
+    exit;
+  
+  }
+  
+  $_SESSION['last_activity'] = time();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,6 +40,12 @@
         <a href="maison.php">Maison</a>
         <a href="loisirs.php">Loisirs</a>
         <a href="services.php">Services</a>
+        <?php if (isset($_SESSION['user'])): ?>
+                <a href="mon-compte.php">Mon Compte</a>
+                <form action="deconnexion.php" method="POST" class="logout-form">
+                    <button type="submit" class="logout-button">Déconnexion</button>
+                </form>
+        <?php endif; ?>
     </nav>
 
     <header>
