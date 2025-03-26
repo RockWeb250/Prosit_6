@@ -1,5 +1,20 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  
+  if (!defined('SESSION_TIMEOUT')) {
+    define('SESSION_TIMEOUT', 30);
+  }
+  
+  // Vérification de la connexion utilisateur
+  if (!isset($_SESSION['user'])) {
+    header('Location: connexion.php');
+    exit;
+  
+  }
+  
+  $_SESSION['last_activity'] = time();
 
 $erreur = null;
 
@@ -76,15 +91,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <nav class="navbar">
-        <a href="../index.php">Accueil</a>
-        <a href="a-propos.php">À Propos</a>
-        <a href="inscription.php" class="active" aria-current="page">Inscription</a>
-        <a href="offre.php">Offres</a>
-        <a href="connexion.php">Connexion</a>
-        <a href="avis.php">Avis</a>
-        <a href="contact.php">Contact</a>
-        <a href="cookies.php">Cookies</a>
-    </nav>
+            <a href="../index.php">Accueil</a>
+            <a href="a-propos.php">À Propos</a>
+            <a href="offre.php">Offres</a>
+            <a href="avis.php">Avis</a>
+            <a href="contact.php">Contact</a>
+            <a href="cookies.php">Cookies</a>
+            <a href="inscription.php"  class="active" aria-current="page">Inscription</a>
+            <a href="connexion.php">Connexion</a>
+        </nav>
 
     <h1 class="page-title"> Créez un compte </h1>
     <div class="form-container">
