@@ -1,23 +1,49 @@
 <?php
 // cookies.php
 
+// Démarrer la session si nécessaire
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
-  }
-  
-  if (!defined('SESSION_TIMEOUT')) {
+}
+
+// Définir une constante de timeout si non définie
+if (!defined('SESSION_TIMEOUT')) {
     define('SESSION_TIMEOUT', 30);
-  }
-  
-  // Vérification de la connexion utilisateur
-  if (!isset($_SESSION['user'])) {
+}
+
+// Vérifier que l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
     header('Location: connexion.php');
     exit;
-  
-  }
-  
-  $_SESSION['last_activity'] = time();
+}
+
+// Mettre à jour l'activité de session
+$_SESSION['last_activity'] = time();
+
+// Gérer la soumission du formulaire des cookies
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cookies'])) {
+    $choix = $_POST['cookies'];
+
+    if ($choix === 'yes' || $choix === 'no') {
+        // Créer un cookie valable 1 an
+        setcookie(
+            'consentement_cookies',
+            $choix === 'yes' ? 'oui' : 'non',
+            time() + 365 * 24 * 60 * 60,
+            '/',
+            '',
+            isset($_SERVER['HTTPS']),
+            true // HttpOnly
+        );
+    }
+
+    // Rediriger pour éviter la double soumission
+    header('Location: cookies.php');
+    exit;
+}
 ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -39,7 +65,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <a href="offre.php">Offres</a>
             <a href="avis.php">Avis</a>
             <a href="contact.php">Contact</a>
-            <a href="cookies.php"  class="active" aria-current="page">Cookies</a>
+            <a href="cookies.php" class="active" aria-current="page">Cookies</a>
             <?php if (isset($_SESSION['user'])): ?>
                 <a href="mon-compte.php">Mon Compte</a>
                 <form action="deconnexion.php" method="POST" class="logout-form">
@@ -59,20 +85,29 @@ if (session_status() == PHP_SESSION_NONE) {
             <p><strong>Ce site utilise des cookies pour améliorer votre expérience.</strong></p>
             <p>Acceptez-vous les cookies ?</p>
 
-            <form id="cookies-form">
+            <form id="cookies-form" method="post">
                 <fieldset class="cookie-options">
                     <label>
                         Oui
-                        <input type="radio" name="cookies" value="yes">
+                        <input type="radio" name="cookie-choice" value="yes">
                     </label>
                     <label>
                         Non
-                        <input type="radio" name="cookies" value="no">
+                        <input type="radio" name="cookie-choice" value="no">
                     </label>
                 </fieldset>
                 <br>
                 <button type="submit" class="submit-btn">Valider</button>
             </form>
+
+            <?php if (isset($_COOKIE['consentement_cookies'])): ?>
+                <p style="margin-top: 10px;">
+                    Préférence actuelle : 
+                    <strong>
+                        <?= $_COOKIE['consentement_cookies'] === 'oui' ? 'Cookies acceptés' : 'Cookies refusés' ?>
+                    </strong>
+                </p>
+            <?php endif; ?>
         </div>
     </main>
 

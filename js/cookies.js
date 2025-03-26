@@ -12,16 +12,39 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 3000);
     }
 
-    // Validation des cookies avant soumission
+    // Validation + envoi AJAX du formulaire cookies
     const cookieForm = document.querySelector(".cookie-box form");
     if (cookieForm) {
         cookieForm.addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche l'envoi classique
+
             const selectedCookie = document.querySelector("input[name='cookie-choice']:checked");
 
             if (!selectedCookie) {
                 showNotification("Veuillez sélectionner une option pour les cookies avant de valider.", "error", cookieForm);
-                event.preventDefault();
+                return;
             }
+
+            const value = selectedCookie.value;
+
+            fetch("cookies.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "cookies=" + encodeURIComponent(value)
+            })
+            .then(() => {
+                // Optionnel : message de confirmation avant reload
+                showNotification("Préférence enregistrée. Merci !", "success", cookieForm);
+
+                setTimeout(() => {
+                    location.reload(); // Recharge après la notif
+                }, 1000);
+            })
+            .catch(() => {
+                showNotification("Une erreur est survenue. Veuillez réessayer.", "error", cookieForm);
+            });
         });
     }
 });
