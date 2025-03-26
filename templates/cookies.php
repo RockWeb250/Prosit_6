@@ -24,25 +24,24 @@ $_SESSION['last_activity'] = time();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cookies'])) {
     $choix = $_POST['cookies'];
 
-    if ($choix === 'yes' || $choix === 'no') {
-        // Créer un cookie valable 1 an
-        setcookie(
-            'consentement_cookies',
-            $choix === 'yes' ? 'oui' : 'non',
-            time() + 365 * 24 * 60 * 60,
-            '/',
-            '',
-            isset($_SERVER['HTTPS']),
-            true // HttpOnly
-        );
+    if ($choix === 'reset') {
+        setcookie('consentement_cookies', '', time() - 3600, '/', '', isset($_SERVER['HTTPS']), true);
+        unset($_SESSION['consentement_cookies']);
+    } elseif (in_array($choix, ['yes', 'no'])) {
+        $valeur = $choix === 'yes' ? 'oui' : 'non';
+        setcookie('consentement_cookies', $valeur, time() + 365 * 24 * 60 * 60, '/', '', isset($_SERVER['HTTPS']), true);
+        $_SESSION['consentement_cookies'] = $valeur;
     }
 
-    // Rediriger pour éviter la double soumission
     header('Location: cookies.php');
     exit;
 }
-?>
 
+
+// Préférence actuelle stockée (session prioritaire, sinon cookie)
+$consentement = $_SESSION['consentement_cookies'] ?? $_COOKIE['consentement_cookies'] ?? null;
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -89,24 +88,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cookies'])) {
                 <fieldset class="cookie-options">
                     <label>
                         Oui
-                        <input type="radio" name="cookie-choice" value="yes">
+                        <input type="radio" name="cookies" value="yes" <?= $consentement === 'oui' ? 'checked' : '' ?>>
                     </label>
                     <label>
                         Non
-                        <input type="radio" name="cookie-choice" value="no">
+                        <input type="radio" name="cookies" value="no" <?= $consentement === 'non' ? 'checked' : '' ?>>
                     </label>
                 </fieldset>
                 <br>
                 <button type="submit" class="submit-btn">Valider</button>
             </form>
 
-            <?php if (isset($_COOKIE['consentement_cookies'])): ?>
+            <?php if ($consentement): ?>
                 <p style="margin-top: 10px;">
-                    Préférence actuelle : 
+                    Préférence actuelle :
                     <strong>
-                        <?= $_COOKIE['consentement_cookies'] === 'oui' ? 'Cookies acceptés' : 'Cookies refusés' ?>
+                        <?= $consentement === 'oui' ? 'Cookies acceptés' : 'Cookies refusés' ?>
                     </strong>
                 </p>
+
+                <form method="post" style="margin-top: 10px;">
+                    <input type="hidden" name="cookies" value="reset">
+                    <button type="submit" class="reset-btn">Réinitialiser le choix</button>
+                </form>
             <?php endif; ?>
         </div>
     </main>

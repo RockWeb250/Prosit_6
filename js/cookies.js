@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
         cookieForm.addEventListener("submit", function(event) {
             event.preventDefault(); // Empêche l'envoi classique
 
-            const selectedCookie = document.querySelector("input[name='cookie-choice']:checked");
+            const selectedCookie = document.querySelector("input[name='cookies']:checked");
 
             if (!selectedCookie) {
                 showNotification("Veuillez sélectionner une option pour les cookies avant de valider.", "error", cookieForm);

@@ -44,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ];
                 $_SESSION['last_activity'] = time();
 
+                // Supprimer le cookie de consentement s'il existait (nouvelle session utilisateur)
+                if (isset($_COOKIE['consentement_cookies'])) {
+                    setcookie('consentement_cookies', '', time() - 3600, '/');
+                }
+
                 // Redirection vers la page d'accueil (ou où tu veux)
                 header('Location: mon-compte.php');
                 exit;
@@ -58,7 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errorMessage = "Erreur SQL : " . $e->getMessage();
     }
 }
+
+// ⚠️ Suppression du cookie déplacée plus haut : ici on ne touche plus à rien
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
