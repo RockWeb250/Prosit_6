@@ -31,11 +31,19 @@ class Utilisateur
      */
     public function findByEmail(string $email): ?object
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM utilisateurs WHERE email = ?");
+        $stmt = $this->pdo->prepare("
+            SELECT u.*, r.nom AS role
+            FROM utilisateurs u
+            LEFT JOIN roles r ON u.role_id = r.id
+            WHERE u.email = ?
+        ");
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
         return $result ?: null;
     }
+
+
+
 
     /**
      * Compter le nombre total d’utilisateurs
@@ -127,4 +135,10 @@ class Utilisateur
         $stmt->execute([':q' => "%$search%"]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getRole(): ?string
+    {
+        return $this->role ?? null;
+    }
+
 }

@@ -13,7 +13,7 @@ $user_id = $_SESSION['user']['id'];
 // Paramètres de connexion
 $db_user = "user";
 $db_pass = "password123";
-$host    = "localhost";
+$host = "localhost";
 $db_name = "prosit7";
 
 // Créer la connexion avec mysqli
@@ -25,7 +25,13 @@ if ($conn->connect_error) {
 }
 
 // Préparer la requête pour récupérer les infos de l'utilisateur
-$stmt = $conn->prepare("SELECT id, email, civilite, nom, prenom FROM utilisateurs WHERE id = ?");
+$stmt = $conn->prepare("
+    SELECT u.id, u.email, u.civilite, u.nom, u.prenom, r.nom AS role
+    FROM utilisateurs u
+    LEFT JOIN roles r ON u.role_id = r.id
+    WHERE u.id = ?
+");
+
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -37,11 +43,13 @@ $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Mon Compte - Lebonplan</title>
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
+
 <body>
     <header>
         <div class="text-center">
@@ -74,12 +82,19 @@ $conn->close();
             <?php if ($userInfo): ?>
                 <div class="cookie-box">
                     <div class="resume-offre">
-                        <p style="text-align : center"><span>ID : <?php echo htmlspecialchars($userInfo['id']); ?></span></p>
-                        <p style="text-align : center"><span>Email : <?php echo htmlspecialchars($userInfo['email']); ?></span></p>
-                        <p style="text-align : center"><span>Civilité : <?php echo htmlspecialchars($userInfo['civilite']); ?></span></p>
-                        <p style="text-align : center"><span>Nom : <?php echo htmlspecialchars($userInfo['nom']); ?></span></p>
-                        <p style="text-align : center"><span>Prénom : <?php echo htmlspecialchars($userInfo['prenom']); ?></span></p>
-                    </div>
+                        <p style="text-align : center"><span>ID : <?php echo htmlspecialchars($userInfo['id']); ?></span>
+                        </p>
+                        <p style="text-align : center"><span>Email :
+                                <?php echo htmlspecialchars($userInfo['email']); ?></span></p>
+                        <p style="text-align : center"><span>Civilité :
+                                <?php echo htmlspecialchars($userInfo['civilite']); ?></span></p>
+                        <p style="text-align : center"><span>Nom : <?php echo htmlspecialchars($userInfo['nom']); ?></span>
+                        </p>
+                        <p style="text-align : center"><span>Prénom :
+                                <?php echo htmlspecialchars($userInfo['prenom']); ?></span></p>
+                        <?php
+                        ?>
+                        <p><span>Rôle : <?= htmlspecialchars(ucfirst($userInfo['role'] ?? 'Inconnu')) ?></span></p>
                 </div>
             <?php else: ?>
                 <p>Aucune information trouvée pour cet utilisateur.</p>
@@ -110,4 +125,5 @@ $conn->close();
 
     <script src="../js/interaction.js"></script>
 </body>
+
 </html>
