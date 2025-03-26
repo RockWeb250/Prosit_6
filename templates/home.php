@@ -20,23 +20,22 @@ if (session_status() === PHP_SESSION_NONE) {
             <img src="Images/BonPlan.png" alt="Le Bon Plan" class="logo">
         </div>
         <nav class="navbar">
-            <a href="index.php" class="active" aria-current="page">Accueil</a>
+            <a href="../index.php"aria-current="page">Accueil</a>
             <a href="templates/a-propos.php">À Propos</a>
             <a href="templates/offre.php">Offres</a>
             <a href="templates/avis.php">Avis</a>
             <a href="templates/contact.php">Contact</a>
             <a href="templates/cookies.php">Cookies</a>
-            <?php if (isset($_SESSION['user']) && empty($_SESSION['user'])): ?>
+            <?php if (isset($_SESSION['user'])): ?>
                 <a href="templates/mon-compte.php">Mon Compte</a>
-            <?php else: ?>
-                <a href="templates/inscription.php">Inscription</a>
-                <a href="templates/connexion.php">Connexion</a>
                 <form action="templates/deconnexion.php" method="POST" class="logout-form">
                     <button type="submit" class="logout-button">Déconnexion</button>
                 </form>
-            </nav>
-        <?php endif; ?>
-
+            <?php else: ?>
+                <a href="templates/inscription.php">Inscription</a>
+                <a href="templates/connexion.php">Connexion</a>
+            <?php endif; ?>
+        </nav>
     </header>
 
     <main>
