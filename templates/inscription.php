@@ -99,8 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="avis.php">Avis</a>
             <a href="contact.php">Contact</a>
             <a href="cookies.php">Cookies</a>
-            <a href="inscription.php"  class="active" aria-current="page">Inscription</a>
-            <a href="connexion.php">Connexion</a>
+            <a href="connexion.php" class="active" aria-current="page">Connexion</a>
         </nav>
 
     <h1 class="page-title"> Créez un compte </h1>

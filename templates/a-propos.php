@@ -29,7 +29,6 @@
           <button type="submit" class="logout-button">Déconnexion</button>
         </form>
       <?php else: ?>
-        <a href="inscription.php">Inscription</a>
         <a href="connexion.php">Connexion</a>
       <?php endif; ?>
     </nav>

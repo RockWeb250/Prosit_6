@@ -456,6 +456,26 @@ form button {
     border-radius: 5px;
 }
 
+.inscription-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1; 
+    height : 17px;
+}
+
+.inscription-btn:hover {
+    background-color: rgb(181, 181, 181);
+}
+
+
 .submit-btn {
     background-color: orange;
     color: white;
@@ -469,6 +489,7 @@ form button {
 .reset-btn {
     background-color: gray;
     color: white;
+    font-weight: bold;
 }
 
 .reset-btn:hover {

@@ -93,8 +93,8 @@ $pm = new PermissionManager();
                 <a href="informations.php" class="btn-status">Mes Infos</a>
             </div>
 
-            <!-- Candidatures : si droit SFx24 (postuler à une offre) -->
-            <?php if ($pm->hasAccess($role, 'SFx24')): ?>
+            <!-- Candidatures : si droit SFx2 (consulter Candidatures) -->
+            <?php if ($pm->hasAccess($role, 'SFx2')): ?>
                 <div class="offer-card">
                     <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">Candidatures</a>
                 </div>

@@ -1,7 +1,7 @@
 <?php
 return [
     'SFx2' => [
-        'libelle' => 'Rechercher une entreprise',
+        'libelle' => 'Consulter les Candidatures',
         'Administrateur' => true,
         'Pilote' => true,
         'Étudiant' => true

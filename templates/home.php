@@ -26,15 +26,11 @@ if (session_status() === PHP_SESSION_NONE) {
             <a href="templates/avis.php">Avis</a>
             <a href="templates/contact.php">Contact</a>
             <a href="templates/cookies.php">Cookies</a>
-            <?php if (isset($_SESSION['user'])): ?>
-                <a href="templates/mon-compte.php">Mon Compte</a>
-                <form action="templates/deconnexion.php" method="POST" class="logout-form">
-                    <button type="submit" class="logout-button">Déconnexion</button>
-                </form>
-            <?php else: ?>
-                <a href="templates/inscription.php">Inscription</a>
-                <a href="templates/connexion.php">Connexion</a>
-            <?php endif; ?>
+            <a href="templates/connexion.php">Connexion</a>
+            <a href="templates/mon-compte.php">Mon Compte</a>
+            <form action="templates/deconnexion.php" method="POST" class="logout-form">
+                <button type="submit" class="logout-button">Déconnexion</button>
+            </form>
         </nav>
     </header>
 
