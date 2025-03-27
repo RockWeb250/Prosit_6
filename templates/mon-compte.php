@@ -93,32 +93,28 @@ $pm = new PermissionManager();
                 <a href="informations.php" class="btn-status">Mes Infos</a>
             </div>
 
-            <!-- Candidatures : si droit SFx2 (consulter Candidatures) -->
-            <?php if ($pm->hasAccess($role, 'SFx2')): ?>
-                <div class="offer-card">
-                    <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">Candidatures</a>
-                </div>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']['role_id'] === 3): ?>
+            <div class="offer-card">
+                <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">Voir mes candidatures</a>
+            </div>
             <?php endif; ?>
 
-            <!-- Gérer les étudiants : si droit SFx17 (Rechercher un compte étudiant) -->
-            <?php if ($pm->hasAccess($role, 'SFx17')): ?>
-                <div class="offer-card">
-                    <a href="gestion_etudiants.php" class="btn-status">Gérer les étudiants</a>
-                </div>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']['role_id'] === 1 || $_SESSION['user']['role_id'] === 2 ): ?>
+            <div class="offer-card">
+                <a href="gestion_etudiants.php" class="btn-status">Gérer les étudiants</a>
+            </div>
             <?php endif; ?>
 
-            <!-- Gérer les offres : si droit SFx9 (Créer une offre) -->
-            <?php if ($pm->hasAccess($role, 'SFx9')): ?>
-                <div class="offer-card">
-                    <a href="gestion_offres.php" class="btn-status">Gérer les offres</a>
-                </div>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']['role_id'] === 1 || $_SESSION['user']['role_id'] === 2): ?>
+            <div class="offer-card">
+                <a href="gestion_offres.php" class="btn-status">Gérer les Offres</a>
+            </div>
             <?php endif; ?>
 
-            <!-- Gérer les pilotes : si droit SFx13 (Rechercher un compte pilote) -->
-            <?php if ($pm->hasAccess($role, 'SFx13')): ?>
-                <div class="offer-card">
-                    <a href="gestion_pilotes.php" class="btn-status">Gérer les pilotes</a>
-                </div>
+            <?php if (isset($_SESSION['user']) && $_SESSION['user']['role_id'] === 1): ?>
+            <div class="offer-card">
+                <a href="gestion_pilotes.php" class="btn-status">Gérer les pilotes</a>
+            </div>
             <?php endif; ?>
         </div>
     </main>

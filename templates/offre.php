@@ -264,7 +264,7 @@ $offersPage = array_slice($offers, $start, $perPage);
         </form>
 
 
-        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role_id'] === 2): ?>
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role_id'] === 3): ?>
             <div class="status-button-container">
                 <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">⭢ Voir mes candidatures</a>
             </div>
