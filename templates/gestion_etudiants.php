@@ -43,7 +43,7 @@ unset($_SESSION['search_result']);
     </header>
 
     <main class="content">
-    <h2>Gestion des Utilisateurs</h2>
+    <h1  class="page-title">Gestion des Utilisateurs</h1>
 
     <?php if (!isset($_SESSION['user']) || ($_SESSION['user']['role_id'] ?? 0) != 1): ?>
         <p>Accès refusé</p>
@@ -53,22 +53,22 @@ unset($_SESSION['search_result']);
     <div class="cookie-box">
         <div class="resume-offre"></div>
         <p style="text-align: center">
-            <span><a href="#recherche" class="btn-login">Rechercher un Utilisateur</a></span>
+            <span><a href="#recherche" class="inscription-btn">Rechercher un Utilisateur</a></span>
         </p>
         <p>
-            <span><a href="#creer" class="btn-login">Créer un Utilisateur</a></span>
+            <span><a href="#creer" class="inscription-btn">Créer un Utilisateur</a></span>
         </p>
         <p>
-            <span><a href="#modifier" class="btn-login">Modifier un Utilisateur</a></span>
+            <span><a href="#supprimer" class="inscription-btn">Supprimer un Utilisateur</a></span>
         </p>
         <p>
-            <span><a href="#supprimer" class="btn-login">Supprimer un Utilisateur</a></span>
+            <span><a href="#modifier" class="inscription-btn">Modifier un Utilisateur</a></span>
         </p>
     </div>
 
     <!-- Recherche -->
     <div id="recherche" style="margin-top: 40px;">
-        <h3>Rechercher un Utilisateur</h3>
+        <h3 class="categorie-title">Rechercher un Utilisateur</h3>
         <form action="/index.php?uri=gestion_utilisateurs/search" method="POST" class="search-form">
             <label for="motcle">Mot-clé :</label>
             <input type="text" id="motcle" name="motcle" required>
@@ -138,7 +138,65 @@ unset($_SESSION['search_result']);
             <input type="password" name="password" required>
 
             <button type="submit" class="submit-btn">Créer</button>
-            <button type="reset" class="reset-btn">Effacer</button>
+            <button type="reset" class="reset-btn">Réinitialiser</button>
+        </form>
+        </div>
+
+    <!-- Suppression -->
+    <div id="supprimer" style="margin-top: 40px;">
+        <div class ="form-container">
+        <h3>Supprimer un Utilisateur</h3>
+        <form action="/index.php?uri=gestion_utilisateurs/delete" method="POST">
+            <label for="nom">Nom :</label>
+            <input type="text" name="nom" required>
+
+            <label for="prenom">Prénom :</label>
+            <input type="text" name="prenom" required>
+
+            <label for="email">Email :</label>
+            <input type="email" name="email" required>
+
+            <label for="role">Rôle :</label>
+            <select name="role" required>
+                <option value="Etudiant">Etudiant</option>
+                <option value="Pilote">Pilote</option>
+                <option value="Admin">Administrateur</option>
+            </select>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" name="password" required>
+
+            <button type="submit" class="submit-btn">Supprimer</button>
+            <button type="reset" class="reset-btn">Réinitialiser</button>
+        </form>
+        </div>
+
+        <!-- Modifier -->
+    <div id="modifier" style="margin-top: 40px;">
+        <div class ="form-container">
+        <h3>Modifier un Utilisateur</h3>
+        <form action="/index.php?uri=gestion_utilisateurs/update" method="POST">
+            <label for="nom">Nom :</label>
+            <input type="text" name="nom" required>
+
+            <label for="prenom">Prénom :</label>
+            <input type="text" name="prenom" required>
+
+            <label for="email">Email :</label>
+            <input type="email" name="email" required>
+
+            <label for="role">Nouveau Rôle :</label>
+            <select name="role" required>
+                <option value="Etudiant">Etudiant</option>
+                <option value="Pilote">Pilote</option>
+                <option value="Admin">Administrateur</option>
+            </select>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" name="password" required>
+
+            <button type="submit" class="submit-btn">Modifier</button>
+            <button type="reset" class="reset-btn">Réinitialiser</button>
         </form>
         </div>
     </div>
