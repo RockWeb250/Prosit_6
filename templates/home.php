@@ -42,6 +42,7 @@ if (!isset($_SESSION['user'])) {
             <form action="templates/deconnexion.php" method="POST" class="logout-form">
                 <button type="submit" class="logout-button">Déconnexion</button>
             </form>
+            <?php endif; ?>
         </nav>
     </header>
 
@@ -61,7 +62,6 @@ if (!isset($_SESSION['user'])) {
             <li><a href="templates/loisirs.php">Loisirs</a></li>
             <li><a href="templates/services.php">Services</a></li>
         </ul>
-        <?php endif; ?>
         <?php endif; ?>
 
         <h3>Derniers articles ajoutés</h3>

@@ -77,8 +77,6 @@ unset($_SESSION['search_result']);
         </form>
     </div>
 
-    <hr>
-
     <!-- Résultat -->
     <?php if (!empty($search_result)): ?>
         <div id="resultat">
@@ -117,6 +115,7 @@ unset($_SESSION['search_result']);
 
     <!-- Création -->
     <div id="creer" style="margin-top: 40px;">
+        <div class ="form-container">
         <h3>Créer un Utilisateur</h3>
         <form action="/index.php?uri=gestion_utilisateurs/create" method="POST">
             <label for="nom">Nom :</label>
@@ -138,8 +137,10 @@ unset($_SESSION['search_result']);
             <label for="password">Mot de passe :</label>
             <input type="password" name="password" required>
 
-            <button type="submit" class="btn">Créer</button>
+            <button type="submit" class="submit-btn">Créer</button>
+            <button type="reset" class="reset-btn">Effacer</button>
         </form>
+        </div>
     </div>
 </main>
 
