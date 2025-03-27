@@ -1,6 +1,17 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
+//indexhp
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
+}
+
+if (!defined('SESSION_TIMEOUT')) {
+    define('SESSION_TIMEOUT', 30);
+}
+
+// Vérification de la connexion utilisateur
+if (!isset($_SESSION['user'])) {
+    header('Location: connexion.php');
+    exit;
 }
 ?>
 
@@ -20,13 +31,13 @@ if (session_status() === PHP_SESSION_NONE) {
             <img src="Images/BonPlan.png" alt="Le Bon Plan" class="logo">
         </div>
         <nav class="navbar">
-            <a href="../index.php"aria-current="page">Accueil</a>
+            <a href="index.php" class="active" aria-current="page">Accueil</a>
             <a href="templates/a-propos.php">À Propos</a>
             <a href="templates/offre.php">Offres</a>
             <a href="templates/avis.php">Avis</a>
             <a href="templates/contact.php">Contact</a>
             <a href="templates/cookies.php">Cookies</a>
-            <a href="templates/connexion.php">Connexion</a>
+            <?php if (isset($_SESSION['user'])): ?>
             <a href="templates/mon-compte.php">Mon Compte</a>
             <form action="templates/deconnexion.php" method="POST" class="logout-form">
                 <button type="submit" class="logout-button">Déconnexion</button>
@@ -50,6 +61,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <li><a href="templates/loisirs.php">Loisirs</a></li>
             <li><a href="templates/services.php">Services</a></li>
         </ul>
+        <?php endif; ?>
         <?php endif; ?>
 
         <h3>Derniers articles ajoutés</h3>

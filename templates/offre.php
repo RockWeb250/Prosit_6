@@ -3,20 +3,26 @@
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
-  }
-  
-  if (!defined('SESSION_TIMEOUT')) {
+}
+
+if (!defined('SESSION_TIMEOUT')) {
     define('SESSION_TIMEOUT', 30);
-  }
-  
-  // Vérification de la connexion utilisateur
-  if (!isset($_SESSION['user'])) {
+}
+
+// Vérification de la connexion utilisateur
+if (!isset($_SESSION['user'])) {
     header('Location: connexion.php');
     exit;
-  
-  }
-  
-  $_SESSION['last_activity'] = time();
+
+}
+
+$_SESSION['last_activity'] = time();
+
+$db_user = "user";
+$db_pass = "password123";
+$host = "localhost";
+$db_name = "prosit7";
+$charset = 'utf8mb4';
 
 $offers = [
     [
@@ -258,11 +264,12 @@ $offersPage = array_slice($offers, $start, $perPage);
         </form>
 
 
-        <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])): ?>
-        <div class="status-button-container">
-            <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">⭢ Voir mes candidatures</a>
-        </div>
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role_id'] === 2): ?>
+            <div class="status-button-container">
+                <a href="/Prosit_6/index.php?uri=show_status" class="btn-status">⭢ Voir mes candidatures</a>
+            </div>
         <?php endif; ?>
+
 
         <h3 class="categorie-title">Liste des offres disponibles</h3>
         <div class="offers-container">

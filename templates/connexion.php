@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Récupération de l'utilisateur par email
-        $stmt = $dbh->prepare("SELECT id, email, motDePasse FROM utilisateurs WHERE email = ? LIMIT 1");
+        $stmt = $dbh->prepare("SELECT id, email, motDePasse, role_id FROM utilisateurs WHERE email = ? LIMIT 1");
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
 
@@ -40,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Mot de passe OK, on connecte l'utilisateur
                 $_SESSION['user'] = [
                     'id' => $result->id,
-                    'email' => $result->email
+                    'email' => $result->email,
+                    'role_id' => $result->role_id
                 ];
                 $_SESSION['last_activity'] = time();
 
